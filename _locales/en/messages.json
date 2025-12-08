@@ -1,0 +1,262 @@
+{
+  "app_name_full": {
+    "message": "ChatGPT Shortcut Effective Extension",
+    "description": "Full product name used for the Chrome Web Store listing."
+  },
+  "app_name_short": {
+    "message": "ChatGPT Shortcut Extension",
+    "description": "Short name shown in the browser action title and UI headers."
+  },
+  "app_description": {
+    "message": "Safer send, vim-like scroll, model toggles, temporary chats, and clean UI for ChatGPT.",
+    "description": "Extension description displayed in the Chrome Web Store."
+  },
+  "html_lang": {
+    "message": "en",
+    "description": "Language code used on the popup HTML tag."
+  },
+  "popup_header_title": {
+    "message": "Extension Controls",
+    "description": "Main heading in the popup."
+  },
+  "popup_button_reset": {
+    "message": "Reset",
+    "description": "Label for the reset button in the popup."
+  },
+  "popup_section_features": {
+    "message": "Features",
+    "description": "Section title for feature toggles."
+  },
+  "popup_section_shortcuts": {
+    "message": "Shortcuts",
+    "description": "Section title for shortcut customization."
+  },
+  "popup_loading": {
+    "message": "Loading settings...",
+    "description": "Helper text shown while storage sync is pending."
+  },
+  "popup_feature_label_vim_scroll": {
+    "message": "Vim-like Scroll",
+    "description": "Toggle label for the vim scroll feature."
+  },
+  "popup_feature_label_wide_screen": {
+    "message": "Wide Screen (Clean UI + Focus)",
+    "description": "Toggle label for the wide screen feature."
+  },
+  "popup_feature_label_safe_send": {
+    "message": "Send with Cmd/Ctrl + Enter",
+    "description": "Toggle label for the safe send feature."
+  },
+  "popup_feature_label_other_shortcuts": {
+    "message": "Other Shortcuts",
+    "description": "Toggle label for additional shortcuts."
+  },
+  "popup_helper_shortcuts_empty": {
+    "message": "Enable a feature to customize its shortcuts.",
+    "description": "Helper text shown when no shortcuts are available."
+  },
+  "popup_placeholder_shortcut": {
+    "message": "Press keys",
+    "description": "Placeholder inside the shortcut input."
+  },
+  "popup_label_navigation": {
+    "message": "Navigation",
+    "description": "Sub-label for navigation shortcuts."
+  },
+  "popup_label_action": {
+    "message": "Action",
+    "description": "Sub-label for action shortcuts."
+  },
+  "popup_message_load_failed": {
+    "message": "Failed to load synced settings. Showing defaults instead.",
+    "description": "Warning shown when storage retrieval fails."
+  },
+  "popup_message_conflict": {
+    "message": "\"$1\" is already assigned to \"$2\".",
+    "description": "Error shown when the same shortcut is reused."
+  },
+  "popup_message_reserved": {
+    "message": "\"$1\" is reserved for ChatGPT's \"$2\" action.",
+    "description": "Error shown when the shortcut conflicts with ChatGPT's built-in shortcut."
+  },
+  "popup_message_chatgpt_conflict": {
+    "message": "\"$1\" conflicts with ChatGPT's default \"$2\" shortcut.",
+    "description": "Warning shown when overlapping with a ChatGPT default shortcut."
+  },
+  "popup_message_requires_modifier": {
+    "message": "\"$1\" must be combined with a modifier key.",
+    "description": "Error shown when a disallowed single key is used."
+  },
+  "popup_message_forbidden_key": {
+    "message": "\"$1\" cannot be used as a shortcut.",
+    "description": "Error shown when a fully forbidden key is used."
+  },
+  "shortcut_label_scroll_top": {
+    "message": "Scroll to Top",
+    "description": "Shortcut label."
+  },
+  "shortcut_label_scroll_bottom": {
+    "message": "Scroll to Bottom",
+    "description": "Shortcut label."
+  },
+  "shortcut_label_scroll_up": {
+    "message": "Scroll Up",
+    "description": "Shortcut label."
+  },
+  "shortcut_label_scroll_down": {
+    "message": "Scroll Down",
+    "description": "Shortcut label."
+  },
+  "shortcut_label_scroll_half_up": {
+    "message": "Scroll Half Page Up",
+    "description": "Shortcut label."
+  },
+  "shortcut_label_scroll_half_down": {
+    "message": "Scroll Half Page Down",
+    "description": "Shortcut label."
+  },
+  "shortcut_label_toggle_focus": {
+    "message": "Toggle Focus",
+    "description": "Shortcut label."
+  },
+  "shortcut_label_toggle_model": {
+    "message": "Toggle Model Selector",
+    "description": "Shortcut label."
+  },
+  "shortcut_label_mode_auto": {
+    "message": "Set Mode: Auto",
+    "description": "Shortcut label."
+  },
+  "shortcut_label_mode_instant": {
+    "message": "Set Mode: Instant",
+    "description": "Shortcut label."
+  },
+  "shortcut_label_mode_thinking": {
+    "message": "Set Mode: Thinking",
+    "description": "Shortcut label."
+  },
+  "shortcut_label_temporary_chat": {
+    "message": "Open Temporary Chat",
+    "description": "Shortcut label."
+  },
+  "shortcut_panel_extension_heading": {
+    "message": "Extension",
+    "description": "Heading added to ChatGPT's shortcut panel."
+  },
+  "shortcut_panel_settings_label": {
+    "message": "Setting Shortcut Key",
+    "description": "Label for shortcut settings entry in ChatGPT panel."
+  },
+  "shortcut_panel_settings_link_text": {
+    "message": "Click here",
+    "description": "Link text that opens the extension popup."
+  },
+  "notification_model_selector_missing": {
+    "message": "Model selector not found",
+    "description": "Toast shown when the Model selector button cannot be located."
+  },
+  "notification_mode_item_missing": {
+    "message": "\"$1\" menu item not found",
+    "description": "Toast shown when a specific model menu entry is missing."
+  },
+  "notification_temporary_chat_missing": {
+    "message": "Temporary Chat button not found",
+    "description": "Toast shown when the temporary chat button is unavailable."
+  },
+  "notification_error_with_reason": {
+    "message": "Error: $1",
+    "description": "Generic error toast prefix."
+  },
+  "error_unknown_mode": {
+    "message": "Unknown mode: $1",
+    "description": "Fallback error when a mode name is invalid."
+  },
+  "error_unknown_generic": {
+    "message": "Unknown error",
+    "description": "Generic fallback error text."
+  },
+  "error_timeout_generic": {
+    "message": "Timeout: Element not found",
+    "description": "Timeout error when waiting for an element."
+  },
+  "error_timeout_waiting": {
+    "message": "Timeout waiting for: $1",
+    "description": "Timeout error that includes the selector."
+  },
+  "key_label_space": {
+    "message": "Space",
+    "description": "Label for the Space key."
+  },
+  "key_label_enter": {
+    "message": "Enter",
+    "description": "Label for the Enter key."
+  },
+  "modifier_label_ctrl": {
+    "message": "Ctrl",
+    "description": "Label for the Control modifier."
+  },
+  "modifier_label_cmd": {
+    "message": "Cmd",
+    "description": "Label for the Command modifier."
+  },
+  "modifier_label_alt": {
+    "message": "Alt",
+    "description": "Label for the Alt modifier."
+  },
+  "modifier_label_option": {
+    "message": "Option",
+    "description": "Label for the Option/Alt modifier on macOS."
+  },
+  "modifier_label_shift": {
+    "message": "Shift",
+    "description": "Label for the Shift modifier."
+  },
+  "chatgpt_shortcut_search_chats": {
+    "message": "Search chats",
+    "description": "ChatGPT-built-in shortcut label."
+  },
+  "chatgpt_shortcut_open_new_chat": {
+    "message": "Open new chat",
+    "description": "ChatGPT-built-in shortcut label."
+  },
+  "chatgpt_shortcut_toggle_sidebar": {
+    "message": "Toggle sidebar",
+    "description": "ChatGPT-built-in shortcut label."
+  },
+  "chatgpt_shortcut_copy_last_code_block": {
+    "message": "Copy last code block",
+    "description": "ChatGPT-built-in shortcut label."
+  },
+  "chatgpt_shortcut_next_message": {
+    "message": "Next message",
+    "description": "ChatGPT-built-in shortcut label."
+  },
+  "chatgpt_shortcut_previous_message": {
+    "message": "Previous message",
+    "description": "ChatGPT-built-in shortcut label."
+  },
+  "chatgpt_shortcut_delete_chat": {
+    "message": "Delete chat",
+    "description": "ChatGPT-built-in shortcut label."
+  },
+  "chatgpt_shortcut_focus_input": {
+    "message": "Focus chat input",
+    "description": "ChatGPT-built-in shortcut label."
+  },
+  "chatgpt_shortcut_add_files": {
+    "message": "Add photos & files",
+    "description": "ChatGPT-built-in shortcut label."
+  },
+  "chatgpt_shortcut_toggle_dev_mode": {
+    "message": "Toggle dev mode",
+    "description": "ChatGPT-built-in shortcut label."
+  },
+  "chatgpt_shortcut_show_shortcuts": {
+    "message": "Show shortcuts",
+    "description": "ChatGPT-built-in shortcut label."
+  },
+  "chatgpt_shortcut_set_custom_instructions": {
+    "message": "Set custom instructions",
+    "description": "ChatGPT-built-in shortcut label."
+  }
+}

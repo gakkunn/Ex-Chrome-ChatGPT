@@ -1,0 +1,85 @@
+{
+  "app_name_full": { "message": "ChatGPT Shortcut Effective Extension" },
+  "app_name_short": { "message": "ChatGPT Shortcut Extension" },
+  "app_description": {
+    "message": "Sichereres Senden, Vim-ähnliches Scrollen, Modellumschaltung, temporäre Chats und aufgeräumte UI für ChatGPT."
+  },
+  "html_lang": { "message": "de" },
+  "popup_header_title": { "message": "Steuerung der Erweiterung" },
+  "popup_button_reset": { "message": "Zurücksetzen" },
+  "popup_section_features": { "message": "Funktionen" },
+  "popup_section_shortcuts": { "message": "Kurzbefehle" },
+  "popup_loading": { "message": "Einstellungen werden geladen..." },
+  "popup_feature_label_vim_scroll": { "message": "Scrollen wie in Vim" },
+  "popup_feature_label_wide_screen": { "message": "Breitbild (Clean UI + Fokus)" },
+  "popup_feature_label_safe_send": { "message": "Mit Cmd/Ctrl + Eingabetaste senden" },
+  "popup_feature_label_other_shortcuts": { "message": "Weitere Kurzbefehle" },
+  "popup_helper_shortcuts_empty": {
+    "message": "Aktiviere eine Funktion, um ihre Kurzbefehle anzupassen."
+  },
+  "popup_placeholder_shortcut": { "message": "Tasten drücken" },
+  "popup_label_navigation": { "message": "Navigation" },
+  "popup_label_action": { "message": "Aktion" },
+  "popup_message_load_failed": {
+    "message": "Synchronisierte Einstellungen konnten nicht geladen werden. Standardwerte werden angezeigt."
+  },
+  "popup_message_conflict": { "message": "\"$1\" ist bereits \"$2\" zugeordnet." },
+  "popup_message_reserved": {
+    "message": "\"$1\" ist für die ChatGPT-Aktion \"$2\" reserviert."
+  },
+  "popup_message_chatgpt_conflict": {
+    "message": "\"$1\" steht mit dem ChatGPT-Standardkurzbefehl \"$2\" in Konflikt."
+  },
+  "popup_message_requires_modifier": {
+    "message": "\"$1\" muss mit einer Modifikatortaste kombiniert werden."
+  },
+  "popup_message_forbidden_key": {
+    "message": "\"$1\" kann nicht als Kurzbefehl verwendet werden."
+  },
+  "shortcut_label_scroll_top": { "message": "Zum Anfang scrollen" },
+  "shortcut_label_scroll_bottom": { "message": "Zum Ende scrollen" },
+  "shortcut_label_scroll_up": { "message": "Nach oben scrollen" },
+  "shortcut_label_scroll_down": { "message": "Nach unten scrollen" },
+  "shortcut_label_scroll_half_up": { "message": "Eine halbe Seite nach oben" },
+  "shortcut_label_scroll_half_down": { "message": "Eine halbe Seite nach unten" },
+  "shortcut_label_toggle_focus": { "message": "Fokus umschalten" },
+  "shortcut_label_toggle_model": { "message": "Modellauswahl umschalten" },
+  "shortcut_label_mode_auto": { "message": "Auf Modus Auto wechseln" },
+  "shortcut_label_mode_instant": { "message": "Auf Modus Instant wechseln" },
+  "shortcut_label_mode_thinking": { "message": "Auf Modus Thinking wechseln" },
+  "shortcut_label_temporary_chat": { "message": "Temporären Chat öffnen" },
+  "shortcut_panel_extension_heading": { "message": "Erweiterung" },
+  "shortcut_panel_settings_label": { "message": "Kurzbefehlseinstellungen" },
+  "shortcut_panel_settings_link_text": { "message": "Hier klicken" },
+  "notification_model_selector_missing": {
+    "message": "Modellauswahl wurde nicht gefunden."
+  },
+  "notification_mode_item_missing": { "message": "\"$1\"-Menüpunkt wurde nicht gefunden." },
+  "notification_temporary_chat_missing": {
+    "message": "Schaltfläche für temporären Chat wurde nicht gefunden."
+  },
+  "notification_error_with_reason": { "message": "Fehler: $1" },
+  "error_unknown_mode": { "message": "Unbekannter Modus: $1" },
+  "error_unknown_generic": { "message": "Unbekannter Fehler." },
+  "error_timeout_generic": { "message": "Zeitüberschreitung: Element nicht gefunden." },
+  "error_timeout_waiting": { "message": "Zeitüberschreitung beim Warten auf $1." },
+  "key_label_space": { "message": "Leertaste" },
+  "key_label_enter": { "message": "Eingabetaste" },
+  "modifier_label_ctrl": { "message": "Strg" },
+  "modifier_label_cmd": { "message": "Cmd" },
+  "modifier_label_alt": { "message": "Alt" },
+  "modifier_label_option": { "message": "Option" },
+  "modifier_label_shift": { "message": "Umschalt" },
+  "chatgpt_shortcut_search_chats": { "message": "Chats durchsuchen" },
+  "chatgpt_shortcut_open_new_chat": { "message": "Neuen Chat öffnen" },
+  "chatgpt_shortcut_toggle_sidebar": { "message": "Seitenleiste umschalten" },
+  "chatgpt_shortcut_copy_last_code_block": { "message": "Letzten Codeblock kopieren" },
+  "chatgpt_shortcut_next_message": { "message": "Nächste Nachricht" },
+  "chatgpt_shortcut_previous_message": { "message": "Vorherige Nachricht" },
+  "chatgpt_shortcut_delete_chat": { "message": "Chat löschen" },
+  "chatgpt_shortcut_focus_input": { "message": "Eingabefeld fokussieren" },
+  "chatgpt_shortcut_add_files": { "message": "Fotos und Dateien hinzufügen" },
+  "chatgpt_shortcut_toggle_dev_mode": { "message": "Entwicklermodus umschalten" },
+  "chatgpt_shortcut_show_shortcuts": { "message": "Kurzbefehle anzeigen" },
+  "chatgpt_shortcut_set_custom_instructions": { "message": "Eigene Anweisungen festlegen" }
+}

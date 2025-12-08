@@ -1,0 +1,85 @@
+{
+  "app_name_full": { "message": "ChatGPT Shortcut Effective Extension" },
+  "app_name_short": { "message": "ChatGPT Shortcut Extension" },
+  "app_description": {
+    "message": "より安全な送信、Vim風スクロール、モデル切り替え、一時チャット、クリーンなUIをChatGPTに提供します。"
+  },
+  "html_lang": { "message": "ja" },
+  "popup_header_title": { "message": "拡張機能のコントロール" },
+  "popup_button_reset": { "message": "リセット" },
+  "popup_section_features": { "message": "機能" },
+  "popup_section_shortcuts": { "message": "ショートカット" },
+  "popup_loading": { "message": "設定を読み込んでいます..." },
+  "popup_feature_label_vim_scroll": { "message": "Vim 風スクロール" },
+  "popup_feature_label_wide_screen": { "message": "ワイド画面（クリーン UI + フォーカス）" },
+  "popup_feature_label_safe_send": { "message": "Cmd/Ctrl + Enter で送信" },
+  "popup_feature_label_other_shortcuts": { "message": "その他のショートカット" },
+  "popup_helper_shortcuts_empty": {
+    "message": "機能を有効にすると、そのショートカットをカスタマイズできます。"
+  },
+  "popup_placeholder_shortcut": { "message": "キーを押してください" },
+  "popup_label_navigation": { "message": "ナビゲーション" },
+  "popup_label_action": { "message": "アクション" },
+  "popup_message_load_failed": {
+    "message": "設定の同期に失敗しました。既定値を表示します。"
+  },
+  "popup_message_conflict": { "message": "「$1」は「$2」にすでに割り当てられています。" },
+  "popup_message_reserved": {
+    "message": "「$1」は ChatGPT の「$2」アクションに予約されています。"
+  },
+  "popup_message_chatgpt_conflict": {
+    "message": "「$1」は ChatGPT の既定の「$2」ショートカットと競合します。"
+  },
+  "popup_message_requires_modifier": {
+    "message": "「$1」は修飾キーと組み合わせてください。"
+  },
+  "popup_message_forbidden_key": {
+    "message": "「$1」はショートカットとして使用できません。"
+  },
+  "shortcut_label_scroll_top": { "message": "先頭へスクロール" },
+  "shortcut_label_scroll_bottom": { "message": "末尾へスクロール" },
+  "shortcut_label_scroll_up": { "message": "上にスクロール" },
+  "shortcut_label_scroll_down": { "message": "下にスクロール" },
+  "shortcut_label_scroll_half_up": { "message": "半ページ上にスクロール" },
+  "shortcut_label_scroll_half_down": { "message": "半ページ下にスクロール" },
+  "shortcut_label_toggle_focus": { "message": "フォーカスを切り替え" },
+  "shortcut_label_toggle_model": { "message": "モデルセレクターを開閉" },
+  "shortcut_label_mode_auto": { "message": "モードを Auto に設定" },
+  "shortcut_label_mode_instant": { "message": "モードを Instant に設定" },
+  "shortcut_label_mode_thinking": { "message": "モードを Thinking に設定" },
+  "shortcut_label_temporary_chat": { "message": "一時チャットを開く" },
+  "shortcut_panel_extension_heading": { "message": "拡張機能" },
+  "shortcut_panel_settings_label": { "message": "ショートカットキーの設定" },
+  "shortcut_panel_settings_link_text": { "message": "こちらをクリック" },
+  "notification_model_selector_missing": {
+    "message": "モデルセレクターが見つかりませんでした。"
+  },
+  "notification_mode_item_missing": { "message": "「$1」のメニュー項目がありません。" },
+  "notification_temporary_chat_missing": {
+    "message": "一時チャットのボタンが見つかりませんでした。"
+  },
+  "notification_error_with_reason": { "message": "エラー: $1" },
+  "error_unknown_mode": { "message": "$1 は不明なモードです。" },
+  "error_unknown_generic": { "message": "不明なエラーです。" },
+  "error_timeout_generic": { "message": "タイムアウト: 要素が見つかりません。" },
+  "error_timeout_waiting": { "message": "タイムアウト: $1 を待機しました。" },
+  "key_label_space": { "message": "スペース" },
+  "key_label_enter": { "message": "Enter" },
+  "modifier_label_ctrl": { "message": "Ctrl" },
+  "modifier_label_cmd": { "message": "Cmd" },
+  "modifier_label_alt": { "message": "Alt" },
+  "modifier_label_option": { "message": "Option" },
+  "modifier_label_shift": { "message": "Shift" },
+  "chatgpt_shortcut_search_chats": { "message": "チャットを検索" },
+  "chatgpt_shortcut_open_new_chat": { "message": "新しいチャットを開く" },
+  "chatgpt_shortcut_toggle_sidebar": { "message": "サイドバーを切り替え" },
+  "chatgpt_shortcut_copy_last_code_block": { "message": "最後のコードブロックをコピー" },
+  "chatgpt_shortcut_next_message": { "message": "次のメッセージ" },
+  "chatgpt_shortcut_previous_message": { "message": "前のメッセージ" },
+  "chatgpt_shortcut_delete_chat": { "message": "チャットを削除" },
+  "chatgpt_shortcut_focus_input": { "message": "入力欄にフォーカス" },
+  "chatgpt_shortcut_add_files": { "message": "写真・ファイルを追加" },
+  "chatgpt_shortcut_toggle_dev_mode": { "message": "開発者モードを切り替え" },
+  "chatgpt_shortcut_show_shortcuts": { "message": "ショートカットを表示" },
+  "chatgpt_shortcut_set_custom_instructions": { "message": "カスタム指示を設定" }
+}

@@ -1,0 +1,85 @@
+{
+  "app_name_full": { "message": "ChatGPT Shortcut Effective Extension" },
+  "app_name_short": { "message": "ChatGPT Shortcut Extension" },
+  "app_description": {
+    "message": "Envoi plus sûr, défilement façon Vim, bascule des modèles, discussions temporaires et interface épurée pour ChatGPT."
+  },
+  "html_lang": { "message": "fr" },
+  "popup_header_title": { "message": "Commandes de l’extension" },
+  "popup_button_reset": { "message": "Réinitialiser" },
+  "popup_section_features": { "message": "Fonctionnalités" },
+  "popup_section_shortcuts": { "message": "Raccourcis" },
+  "popup_loading": { "message": "Chargement des paramètres..." },
+  "popup_feature_label_vim_scroll": { "message": "Défilement façon Vim" },
+  "popup_feature_label_wide_screen": { "message": "Grand écran (UI épurée + focus)" },
+  "popup_feature_label_safe_send": { "message": "Envoyer avec Cmd/Ctrl + Entrée" },
+  "popup_feature_label_other_shortcuts": { "message": "Autres raccourcis" },
+  "popup_helper_shortcuts_empty": {
+    "message": "Activez une fonctionnalité pour personnaliser ses raccourcis."
+  },
+  "popup_placeholder_shortcut": { "message": "Appuyez sur les touches" },
+  "popup_label_navigation": { "message": "Navigation" },
+  "popup_label_action": { "message": "Action" },
+  "popup_message_load_failed": {
+    "message": "Impossible de charger les paramètres synchronisés. Affichage des valeurs par défaut."
+  },
+  "popup_message_conflict": { "message": "\"$1\" est déjà attribué à \"$2\"." },
+  "popup_message_reserved": {
+    "message": "\"$1\" est réservé à l’action \"$2\" de ChatGPT."
+  },
+  "popup_message_chatgpt_conflict": {
+    "message": "\"$1\" est en conflit avec le raccourci par défaut \"$2\" de ChatGPT."
+  },
+  "popup_message_requires_modifier": {
+    "message": "\"$1\" doit être combiné à une touche de modification."
+  },
+  "popup_message_forbidden_key": {
+    "message": "\"$1\" ne peut pas être utilisé comme raccourci."
+  },
+  "shortcut_label_scroll_top": { "message": "Défiler en haut" },
+  "shortcut_label_scroll_bottom": { "message": "Défiler en bas" },
+  "shortcut_label_scroll_up": { "message": "Défiler vers le haut" },
+  "shortcut_label_scroll_down": { "message": "Défiler vers le bas" },
+  "shortcut_label_scroll_half_up": { "message": "Défiler d’une demi-page vers le haut" },
+  "shortcut_label_scroll_half_down": { "message": "Défiler d’une demi-page vers le bas" },
+  "shortcut_label_toggle_focus": { "message": "Basculer le focus" },
+  "shortcut_label_toggle_model": { "message": "Basculer le sélecteur de modèle" },
+  "shortcut_label_mode_auto": { "message": "Passer en mode Auto" },
+  "shortcut_label_mode_instant": { "message": "Passer en mode Instant" },
+  "shortcut_label_mode_thinking": { "message": "Passer en mode Thinking" },
+  "shortcut_label_temporary_chat": { "message": "Ouvrir un chat temporaire" },
+  "shortcut_panel_extension_heading": { "message": "Extension" },
+  "shortcut_panel_settings_label": { "message": "Paramètres des raccourcis" },
+  "shortcut_panel_settings_link_text": { "message": "Cliquer ici" },
+  "notification_model_selector_missing": {
+    "message": "Sélecteur de modèle introuvable."
+  },
+  "notification_mode_item_missing": { "message": "Élément de menu \"$1\" introuvable." },
+  "notification_temporary_chat_missing": {
+    "message": "Bouton de chat temporaire introuvable."
+  },
+  "notification_error_with_reason": { "message": "Erreur : $1" },
+  "error_unknown_mode": { "message": "Mode inconnu : $1" },
+  "error_unknown_generic": { "message": "Erreur inconnue." },
+  "error_timeout_generic": { "message": "Délai dépassé : élément introuvable." },
+  "error_timeout_waiting": { "message": "Délai dépassé en attendant : $1." },
+  "key_label_space": { "message": "Espace" },
+  "key_label_enter": { "message": "Entrée" },
+  "modifier_label_ctrl": { "message": "Ctrl" },
+  "modifier_label_cmd": { "message": "Cmd" },
+  "modifier_label_alt": { "message": "Alt" },
+  "modifier_label_option": { "message": "Option" },
+  "modifier_label_shift": { "message": "Maj" },
+  "chatgpt_shortcut_search_chats": { "message": "Rechercher des chats" },
+  "chatgpt_shortcut_open_new_chat": { "message": "Ouvrir un nouveau chat" },
+  "chatgpt_shortcut_toggle_sidebar": { "message": "Basculer la barre latérale" },
+  "chatgpt_shortcut_copy_last_code_block": { "message": "Copier le dernier bloc de code" },
+  "chatgpt_shortcut_next_message": { "message": "Message suivant" },
+  "chatgpt_shortcut_previous_message": { "message": "Message précédent" },
+  "chatgpt_shortcut_delete_chat": { "message": "Supprimer le chat" },
+  "chatgpt_shortcut_focus_input": { "message": "Placer le focus dans le champ" },
+  "chatgpt_shortcut_add_files": { "message": "Ajouter des photos et des fichiers" },
+  "chatgpt_shortcut_toggle_dev_mode": { "message": "Basculer le mode développeur" },
+  "chatgpt_shortcut_show_shortcuts": { "message": "Afficher les raccourcis" },
+  "chatgpt_shortcut_set_custom_instructions": { "message": "Définir des instructions personnalisées" }
+}

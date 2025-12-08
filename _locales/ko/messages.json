@@ -1,0 +1,85 @@
+{
+  "app_name_full": { "message": "ChatGPT Shortcut Effective Extension" },
+  "app_name_short": { "message": "ChatGPT Shortcut Extension" },
+  "app_description": {
+    "message": "더 안전한 전송, Vim 스타일 스크롤, 모델 전환, 임시 채팅, 깔끔한 UI를 ChatGPT에 제공합니다."
+  },
+  "html_lang": { "message": "ko" },
+  "popup_header_title": { "message": "확장 프로그램 제어" },
+  "popup_button_reset": { "message": "초기화" },
+  "popup_section_features": { "message": "기능" },
+  "popup_section_shortcuts": { "message": "단축키" },
+  "popup_loading": { "message": "설정을 불러오는 중..." },
+  "popup_feature_label_vim_scroll": { "message": "Vim 스타일 스크롤" },
+  "popup_feature_label_wide_screen": { "message": "와이드 화면(클린 UI + 포커스)" },
+  "popup_feature_label_safe_send": { "message": "Cmd/Ctrl + Enter 로 보내기" },
+  "popup_feature_label_other_shortcuts": { "message": "기타 단축키" },
+  "popup_helper_shortcuts_empty": {
+    "message": "기능을 켜면 해당 단축키를 사용자 지정할 수 있습니다."
+  },
+  "popup_placeholder_shortcut": { "message": "키를 누르세요" },
+  "popup_label_navigation": { "message": "탐색" },
+  "popup_label_action": { "message": "동작" },
+  "popup_message_load_failed": {
+    "message": "동기화된 설정을 불러오지 못했습니다. 기본값을 표시합니다."
+  },
+  "popup_message_conflict": { "message": "\"$1\"는 \"$2\"에 이미 할당되어 있습니다." },
+  "popup_message_reserved": {
+    "message": "\"$1\"는 ChatGPT의 \"$2\" 작업에 예약되어 있습니다."
+  },
+  "popup_message_chatgpt_conflict": {
+    "message": "\"$1\"는 ChatGPT 기본 \"$2\" 단축키와 충돌합니다."
+  },
+  "popup_message_requires_modifier": {
+    "message": "\"$1\"는 조합 키와 함께 사용해야 합니다."
+  },
+  "popup_message_forbidden_key": {
+    "message": "\"$1\"는 바로가기 키로 사용할 수 없습니다."
+  },
+  "shortcut_label_scroll_top": { "message": "맨 위로 스크롤" },
+  "shortcut_label_scroll_bottom": { "message": "맨 아래로 스크롤" },
+  "shortcut_label_scroll_up": { "message": "위로 스크롤" },
+  "shortcut_label_scroll_down": { "message": "아래로 스크롤" },
+  "shortcut_label_scroll_half_up": { "message": "반 페이지 위로 스크롤" },
+  "shortcut_label_scroll_half_down": { "message": "반 페이지 아래로 스크롤" },
+  "shortcut_label_toggle_focus": { "message": "포커스 전환" },
+  "shortcut_label_toggle_model": { "message": "모델 선택기 전환" },
+  "shortcut_label_mode_auto": { "message": "Auto 모드로 설정" },
+  "shortcut_label_mode_instant": { "message": "Instant 모드로 설정" },
+  "shortcut_label_mode_thinking": { "message": "Thinking 모드로 설정" },
+  "shortcut_label_temporary_chat": { "message": "임시 대화 열기" },
+  "shortcut_panel_extension_heading": { "message": "확장 프로그램" },
+  "shortcut_panel_settings_label": { "message": "단축키 설정" },
+  "shortcut_panel_settings_link_text": { "message": "여기를 클릭" },
+  "notification_model_selector_missing": {
+    "message": "모델 선택기를 찾을 수 없습니다."
+  },
+  "notification_mode_item_missing": { "message": "\"$1\" 메뉴 항목을 찾을 수 없습니다." },
+  "notification_temporary_chat_missing": {
+    "message": "임시 대화 버튼을 찾을 수 없습니다."
+  },
+  "notification_error_with_reason": { "message": "오류: $1" },
+  "error_unknown_mode": { "message": "$1 모드를 알 수 없습니다." },
+  "error_unknown_generic": { "message": "알 수 없는 오류입니다." },
+  "error_timeout_generic": { "message": "시간 초과: 요소를 찾을 수 없습니다." },
+  "error_timeout_waiting": { "message": "시간 초과: $1을(를) 기다리는 중입니다." },
+  "key_label_space": { "message": "스페이스" },
+  "key_label_enter": { "message": "Enter" },
+  "modifier_label_ctrl": { "message": "Ctrl" },
+  "modifier_label_cmd": { "message": "Cmd" },
+  "modifier_label_alt": { "message": "Alt" },
+  "modifier_label_option": { "message": "Option" },
+  "modifier_label_shift": { "message": "Shift" },
+  "chatgpt_shortcut_search_chats": { "message": "채팅 검색" },
+  "chatgpt_shortcut_open_new_chat": { "message": "새 채팅 열기" },
+  "chatgpt_shortcut_toggle_sidebar": { "message": "사이드바 전환" },
+  "chatgpt_shortcut_copy_last_code_block": { "message": "마지막 코드 블록 복사" },
+  "chatgpt_shortcut_next_message": { "message": "다음 메시지" },
+  "chatgpt_shortcut_previous_message": { "message": "이전 메시지" },
+  "chatgpt_shortcut_delete_chat": { "message": "채팅 삭제" },
+  "chatgpt_shortcut_focus_input": { "message": "입력창에 포커스" },
+  "chatgpt_shortcut_add_files": { "message": "사진 및 파일 추가" },
+  "chatgpt_shortcut_toggle_dev_mode": { "message": "개발자 모드 전환" },
+  "chatgpt_shortcut_show_shortcuts": { "message": "단축키 표시" },
+  "chatgpt_shortcut_set_custom_instructions": { "message": "맞춤 지침 설정" }
+}

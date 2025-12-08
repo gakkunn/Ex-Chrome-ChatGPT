@@ -1,0 +1,85 @@
+{
+  "app_name_full": { "message": "ChatGPT Shortcut Effective Extension" },
+  "app_name_short": { "message": "ChatGPT Shortcut Extension" },
+  "app_description": {
+    "message": "更安全的发送、Vim 风格滚动、模型切换、临时聊天以及简洁的界面，适用于 ChatGPT。"
+  },
+  "html_lang": { "message": "zh-CN" },
+  "popup_header_title": { "message": "扩展控制" },
+  "popup_button_reset": { "message": "重置" },
+  "popup_section_features": { "message": "功能" },
+  "popup_section_shortcuts": { "message": "快捷键" },
+  "popup_loading": { "message": "正在加载设置..." },
+  "popup_feature_label_vim_scroll": { "message": "Vim 风格滚动" },
+  "popup_feature_label_wide_screen": { "message": "宽屏（干净界面 + 聚焦）" },
+  "popup_feature_label_safe_send": { "message": "使用 Cmd/Ctrl + Enter 发送" },
+  "popup_feature_label_other_shortcuts": { "message": "其他快捷键" },
+  "popup_helper_shortcuts_empty": {
+    "message": "启用某个功能即可自定义其快捷键。"
+  },
+  "popup_placeholder_shortcut": { "message": "按下组合键" },
+  "popup_label_navigation": { "message": "导航" },
+  "popup_label_action": { "message": "操作" },
+  "popup_message_load_failed": {
+    "message": "无法加载同步设置，已显示默认值。"
+  },
+  "popup_message_conflict": { "message": "“$1”已分配给“$2”。" },
+  "popup_message_reserved": {
+    "message": "“$1”已保留给 ChatGPT 的“$2”操作。"
+  },
+  "popup_message_chatgpt_conflict": {
+    "message": "“$1”与 ChatGPT 的默认“$2”快捷键冲突。"
+  },
+  "popup_message_requires_modifier": {
+    "message": "“$1” 必须与修饰键组合使用。"
+  },
+  "popup_message_forbidden_key": {
+    "message": "“$1” 不能用作快捷键。"
+  },
+  "shortcut_label_scroll_top": { "message": "滚动至顶部" },
+  "shortcut_label_scroll_bottom": { "message": "滚动至底部" },
+  "shortcut_label_scroll_up": { "message": "向上滚动" },
+  "shortcut_label_scroll_down": { "message": "向下滚动" },
+  "shortcut_label_scroll_half_up": { "message": "半页向上滚动" },
+  "shortcut_label_scroll_half_down": { "message": "半页向下滚动" },
+  "shortcut_label_toggle_focus": { "message": "切换焦点" },
+  "shortcut_label_toggle_model": { "message": "切换模型选择器" },
+  "shortcut_label_mode_auto": { "message": "切换到 Auto 模式" },
+  "shortcut_label_mode_instant": { "message": "切换到 Instant 模式" },
+  "shortcut_label_mode_thinking": { "message": "切换到 Thinking 模式" },
+  "shortcut_label_temporary_chat": { "message": "打开临时对话" },
+  "shortcut_panel_extension_heading": { "message": "扩展" },
+  "shortcut_panel_settings_label": { "message": "快捷键设置" },
+  "shortcut_panel_settings_link_text": { "message": "点击此处" },
+  "notification_model_selector_missing": {
+    "message": "找不到模型选择器。"
+  },
+  "notification_mode_item_missing": { "message": "找不到“$1”菜单项。" },
+  "notification_temporary_chat_missing": {
+    "message": "找不到临时对话按钮。"
+  },
+  "notification_error_with_reason": { "message": "错误：$1" },
+  "error_unknown_mode": { "message": "未知模式：$1" },
+  "error_unknown_generic": { "message": "发生未知错误。" },
+  "error_timeout_generic": { "message": "超时：未找到元素。" },
+  "error_timeout_waiting": { "message": "超时：等待 $1 时失败。" },
+  "key_label_space": { "message": "空格" },
+  "key_label_enter": { "message": "Enter" },
+  "modifier_label_ctrl": { "message": "Ctrl" },
+  "modifier_label_cmd": { "message": "Cmd" },
+  "modifier_label_alt": { "message": "Alt" },
+  "modifier_label_option": { "message": "Option" },
+  "modifier_label_shift": { "message": "Shift" },
+  "chatgpt_shortcut_search_chats": { "message": "搜索聊天" },
+  "chatgpt_shortcut_open_new_chat": { "message": "开启新聊天" },
+  "chatgpt_shortcut_toggle_sidebar": { "message": "切换侧边栏" },
+  "chatgpt_shortcut_copy_last_code_block": { "message": "复制最后一段代码" },
+  "chatgpt_shortcut_next_message": { "message": "下一条消息" },
+  "chatgpt_shortcut_previous_message": { "message": "上一条消息" },
+  "chatgpt_shortcut_delete_chat": { "message": "删除聊天" },
+  "chatgpt_shortcut_focus_input": { "message": "聚焦输入框" },
+  "chatgpt_shortcut_add_files": { "message": "添加照片和文件" },
+  "chatgpt_shortcut_toggle_dev_mode": { "message": "切换开发者模式" },
+  "chatgpt_shortcut_show_shortcuts": { "message": "显示快捷键" },
+  "chatgpt_shortcut_set_custom_instructions": { "message": "设置自定义指令" }
+}
