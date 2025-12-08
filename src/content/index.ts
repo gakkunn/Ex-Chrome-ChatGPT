@@ -156,7 +156,7 @@ if (isExtensionContextValid()) {
 
   // Inject Page Context Script (for history & network interception)
   const script = document.createElement('script');
-  script.src = chrome.runtime.getURL('inject.js');
+  script.src = chrome.runtime.getURL('src/inject/index.ts');
   script.addEventListener('load', () => {
     script.remove();
   });
