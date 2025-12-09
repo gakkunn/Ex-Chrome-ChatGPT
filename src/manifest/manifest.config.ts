@@ -30,7 +30,7 @@ export default defineManifest({
     service_worker: 'src/background/index.ts',
     type: 'module',
   },
-  permissions: ['storage', 'tabs'],
+  permissions: ['storage'],
   host_permissions: ['https://chatgpt.com/*', 'https://chat.openai.com/*'],
   commands: {
     reload_extension_dev: {
