@@ -158,6 +158,12 @@ html[data-chatgpt-unified-wide='true'] .content-fade::after {
   background: none !important;
 }
 
+html[data-chatgpt-unified-wide='true']
+  .flex.h-full.flex-col.overflow-y-auto.\@w-xl\/main\:pt-\(--header-height\).\[scrollbar-gutter\:stable_both-edges\] {
+  position: relative !important;
+  height: 100% !important;
+}
+
 /* Toast Notification */
 .custom-shortcut-toast {
   position: fixed;
