@@ -4,6 +4,8 @@
 
 <!-- Add other badges here if desired (CI Status / Version, etc.) -->
 
+- Chrome Web Store: [ChatGPT Shortcut Effective Extension](https://chromewebstore.google.com/detail/chatgpt-shortcut-effectiv/aoemceeicbdlapmljecabaegdjnifllg?authuser=0&hl=en)
+
 ## Overview
 
 A Chrome extension that makes ChatGPT easier to use with a keyboard-centric workflow. It provides safe send (Cmd/Ctrl+Enter), Vim-like scrolling, model-switching shortcuts, quick access to Temporary Chat, and UI cleanup—all in one package. You can toggle each feature on/off and customize shortcuts directly from the popup.
@@ -37,8 +39,11 @@ Screenshots will be added later (see `docs/images/README.md`). Currently showing
 
 ## Installation
 
-> ℹ️ **Not yet published to the Chrome Web Store.**  
-> You can use it via "Local Installation (Developer Mode)" below.
+### Chrome Web Store
+
+- Install directly from the Chrome Web Store: [ChatGPT Shortcut Effective Extension](https://chromewebstore.google.com/detail/chatgpt-shortcut-effectiv/aoemceeicbdlapmljecabaegdjnifllg?authuser=0&hl=en)
+
+### Local installation (Developer Mode)
 
 ### 1. Clone the repository
 
