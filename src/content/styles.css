@@ -19,7 +19,7 @@ html[data-chatgpt-unified-wide='true'] .composer-parent {
 }
 
 html[data-chatgpt-unified-wide='true'] #page-header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -118,7 +118,7 @@ html[data-chatgpt-unified-wide='true'] .composer-parent > div.relative.grow {
 
 /* Focus styles (shift+space) */
 html[data-chatgpt-unified-wide='true'] #thread-bottom-container {
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   bottom: 25px;
@@ -176,5 +176,11 @@ html[data-chatgpt-unified-wide='true']
 }
 
 button.cursor-pointer.absolute.z-30.rounded-full.border.w-8.h-8[class*='bottom-[calc(var(--composer-overlap-px)+--spacing(6))]'] {
+  display: none !important;
+}
+
+/* Hide scroll-to-bottom button in wide mode */
+html[data-chatgpt-unified-wide='true']
+  button.cursor-pointer.absolute.z-30.rounded-full.w-8.h-8[class*='bottom-[calc(100%+6*var(--spacing))'] {
   display: none !important;
 }
