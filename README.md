@@ -8,7 +8,7 @@
 
 ## Overview
 
-A Chrome extension that makes ChatGPT easier to use with a keyboard-centric workflow. It provides safe send (Cmd/Ctrl+Enter), Vim-like scrolling, model-switching shortcuts, quick access to Temporary Chat, and UI cleanup—all in one package. You can toggle each feature on/off and customize shortcuts directly from the popup.
+A Chrome extension that makes ChatGPT easier to use with a keyboard-centric workflow. It provides safe send (Cmd/Ctrl+Enter), Vim-like scrolling, model-switching shortcuts, chat pin/unpin, quick access to Temporary Chat, and UI cleanup—all in one package. You can toggle each feature on/off and customize shortcuts directly from the popup.
 
 This is an open-source extension implemented based on Chrome Extension Manifest v3.
 
@@ -20,6 +20,7 @@ This is an open-source extension implemented based on Chrome Extension Manifest 
 - **Wide Screen + Focus toggle**: Cleaner, wider layout while preserving input field focus
 - **Safe send**: Prevents accidental Enter-only sends; requires Cmd/Ctrl+Enter to submit
 - **Model operation shortcuts**: Quickly open the model selector or switch directly to Auto/Instant/Thinking modes
+- **Pin/Unpin chat**: Toggle chat pin status from the keyboard
 - **Extra utilities**: Launch Temporary Chat, view shortcut help overlay, and more
 
 <!-- For a simple extension, 2-5 items are fine -->
@@ -73,7 +74,7 @@ npm run build   # or npm run dev (watch build to dist/ for development)
 
 1. After installing the extension, pin the icon from the Chrome toolbar.
 2. Use the popup to toggle features on/off and click any shortcut input field to rebind it with conflict detection.
-3. Examples: `j`/`k` for scrolling, `Shift + Space` to toggle input focus, `Cmd/Ctrl + Enter` for safe send, `Cmd/Ctrl + Shift + 8/9/0` to switch to Auto/Thinking/Instant modes, `Cmd/Ctrl + I` to open Temporary Chat.
+3. Examples: `j`/`k` for scrolling, `Shift + Space` to toggle input focus, `Cmd/Ctrl + Enter` for safe send, `Cmd/Ctrl + Shift + 8/9/0` to switch to Auto/Thinking/Instant modes, `Cmd/Ctrl + I` to open Temporary Chat, `Cmd/Ctrl + Shift + P` to pin/unpin the current chat.
 
 ---
 
@@ -146,4 +147,3 @@ This extension does not collect personally identifiable information and does not
 ## License
 
 This project is released under the [MIT License](./LICENSE).
-
