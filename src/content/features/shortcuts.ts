@@ -16,6 +16,7 @@ import {
 import { waitFor, humanClick, showNotification, getInputField } from './utils';
 
 type ScrollType = 'top' | 'bottom' | 'up' | 'down' | 'halfUp' | 'halfDown';
+type ModeName = 'auto' | 'instant' | 'thinking';
 
 export class ShortcutsManager {
   private scrollingDirection: 'up' | 'down' | null = null;
@@ -131,12 +132,156 @@ export class ShortcutsManager {
     await new Promise((resolve) => setTimeout(resolve, 150));
   }
 
+  private normalizeModeName(modeName: string): ModeName | null {
+    const normalized = modeName.trim().toLowerCase();
+    if (normalized === 'auto' || normalized === 'instant' || normalized === 'thinking') {
+      return normalized;
+    }
+    return null;
+  }
+
+  private getOpenMenuRoot(): HTMLElement | null {
+    const menus = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        '[data-radix-menu-content][data-state="open"], [role="menu"][data-state="open"]'
+      )
+    );
+    if (menus.length) {
+      return menus[menus.length - 1];
+    }
+    return null;
+  }
+
+  private waitForMenuClosed(menu: HTMLElement, timeout = 15000): Promise<boolean> {
+    return new Promise((resolve) => {
+      if (!menu.isConnected || menu.getAttribute('data-state') !== 'open') {
+        resolve(true);
+        return;
+      }
+
+      let finished = false;
+      const finalize = (closed: boolean) => {
+        if (finished) return;
+        finished = true;
+        observer.disconnect();
+        clearTimeout(timer);
+        resolve(closed);
+      };
+
+      const observer = new MutationObserver(() => {
+        if (!menu.isConnected || menu.getAttribute('data-state') !== 'open') {
+          finalize(true);
+        }
+      });
+
+      observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['data-state'],
+      });
+
+      const timer = window.setTimeout(() => finalize(false), timeout);
+    });
+  }
+
+  private async focusInputAfterMenuClose() {
+    let menu: HTMLElement | null = null;
+    try {
+      menu = (await waitFor(() => this.getOpenMenuRoot(), { timeout: 2000 })) as HTMLElement;
+    } catch {
+      return;
+    }
+
+    if (!menu) return;
+
+    const closed = await this.waitForMenuClosed(menu);
+    if (!closed) return;
+
+    setTimeout(() => {
+      const input = getInputField();
+      if (input) input.focus();
+    }, 200);
+  }
+
+  private itemTextMatchesMode(item: HTMLElement, mode: ModeName): boolean {
+    const text = item.textContent?.toLowerCase() ?? '';
+    return text.includes(mode);
+  }
+
+  private findModeMenuItem(mode: ModeName): HTMLElement | null {
+    const root = this.getOpenMenuRoot();
+    if (!root) return null;
+
+    const items = Array.from(root.querySelectorAll<HTMLElement>('[role="menuitem"]'));
+    const byText = items.find((item) => this.itemTextMatchesMode(item, mode));
+    if (byText) return byText;
+
+    const testIdItems = items.filter((item) => {
+      const testId = item.getAttribute('data-testid') ?? '';
+      return testId.startsWith('model-switcher-') && !testId.startsWith('model-switcher-dropdown');
+    });
+
+    const instantItem = testIdItems.find((item) => {
+      const testId = item.getAttribute('data-testid') ?? '';
+      return testId.endsWith('-instant');
+    });
+    const thinkingItem = testIdItems.find((item) => {
+      const testId = item.getAttribute('data-testid') ?? '';
+      return testId.endsWith('-thinking');
+    });
+
+    if (mode === 'instant') return instantItem || null;
+    if (mode === 'thinking') return thinkingItem || null;
+
+    const baseTestId =
+      instantItem?.getAttribute('data-testid')?.replace(/-instant$/, '') ||
+      thinkingItem?.getAttribute('data-testid')?.replace(/-thinking$/, '');
+    if (baseTestId) {
+      const baseItem = testIdItems.find(
+        (item) => (item.getAttribute('data-testid') ?? '') === baseTestId
+      );
+      if (baseItem) return baseItem;
+    }
+
+    return (
+      testIdItems.find((item) => {
+        const testId = item.getAttribute('data-testid') ?? '';
+        return !testId.endsWith('-instant') && !testId.endsWith('-thinking');
+      }) || null
+    );
+  }
+
+  private async waitForModeMenuItem(mode: ModeName): Promise<HTMLElement | null> {
+    try {
+      const item = await waitFor(() => this.findModeMenuItem(mode), { timeout: 3000 });
+      return item as HTMLElement;
+    } catch {
+      return null;
+    }
+  }
+
+  private async clickModeItem(modeName: string): Promise<void> {
+    const mode = this.normalizeModeName(modeName);
+    if (!mode) {
+      throw new Error(getMessage('error_unknown_mode', [modeName]));
+    }
+
+    const item = await this.waitForModeMenuItem(mode);
+    if (!item) {
+      showNotification(getMessage('notification_mode_item_missing', [modeName]));
+      return;
+    }
+    humanClick(item);
+  }
+
   private async toggleModel() {
     try {
       if (this.isGptsPage()) {
         await this.closeAllMenus();
         await this.openGptsTriggerMenu();
         await this.openModelSubMenu();
+        void this.focusInputAfterMenuClose();
         return;
       }
 
@@ -149,6 +294,7 @@ export class ShortcutsManager {
         return;
       }
       humanClick(trigger);
+      void this.focusInputAfterMenuClose();
     } catch (error: unknown) {
       this.notifyError(error);
     }
@@ -169,17 +315,7 @@ export class ShortcutsManager {
   }
 
   private async clickModelItemForGpts(mode: string): Promise<void> {
-    const testIdMap: Record<string, string> = {
-      auto: 'model-switcher-gpt-5-1',
-      instant: 'model-switcher-gpt-5-1-instant',
-      thinking: 'model-switcher-gpt-5-1-thinking',
-    };
-
-    const testId = testIdMap[mode.toLowerCase()];
-    if (!testId) throw new Error(getMessage('error_unknown_mode', [mode]));
-
-    const item = await this.waitForElement(`[data-testid="${testId}"]`);
-    humanClick(item);
+    await this.clickModeItem(mode);
   }
 
   private async selectModeForGpts(modeName: string): Promise<void> {
@@ -224,26 +360,7 @@ export class ShortcutsManager {
         return;
       }
       humanClick(trigger);
-
-      const selectorMap: Record<string, string> = {
-        auto: '[data-testid="model-switcher-gpt-5-1"]',
-        instant: '[data-testid="model-switcher-gpt-5-1-instant"]',
-        thinking: '[data-testid="model-switcher-gpt-5-1-thinking"]',
-      };
-
-      const selector = selectorMap[modeName.toLowerCase()];
-      if (!selector) {
-        showNotification(getMessage('notification_mode_item_missing', [modeName]));
-        return;
-      }
-
-      const item = await this.waitForElement(selector);
-
-      if (!item) {
-        showNotification(getMessage('notification_mode_item_missing', [modeName]));
-        return;
-      }
-      humanClick(item);
+      await this.clickModeItem(modeName);
       setTimeout(() => {
         const input = getInputField();
         if (input) input.focus();
