@@ -48,6 +48,7 @@
   "shortcut_label_mode_instant": { "message": "切换到 Instant 模式" },
   "shortcut_label_mode_thinking": { "message": "切换到 Thinking 模式" },
   "shortcut_label_temporary_chat": { "message": "打开临时对话" },
+  "shortcut_label_pin_chat": { "message": "固定/取消固定聊天" },
   "shortcut_panel_extension_heading": { "message": "扩展" },
   "shortcut_panel_settings_label": { "message": "快捷键设置" },
   "shortcut_panel_settings_link_text": { "message": "点击此处" },
@@ -58,6 +59,14 @@
   "notification_temporary_chat_missing": {
     "message": "找不到临时对话按钮。"
   },
+  "notification_conversation_menu_missing": {
+    "message": "未找到对话菜单。"
+  },
+  "notification_pin_menu_item_missing": {
+    "message": "未找到固定/取消固定菜单项。"
+  },
+  "notification_pin_chat": { "message": "固定聊天" },
+  "notification_unpin_chat": { "message": "取消固定聊天" },
   "notification_error_with_reason": { "message": "错误：$1" },
   "error_unknown_mode": { "message": "未知模式：$1" },
   "error_unknown_generic": { "message": "发生未知错误。" },

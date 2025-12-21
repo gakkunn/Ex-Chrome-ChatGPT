@@ -48,6 +48,7 @@
   "shortcut_label_mode_instant": { "message": "Cambiar a modo Instant" },
   "shortcut_label_mode_thinking": { "message": "Cambiar a modo Thinking" },
   "shortcut_label_temporary_chat": { "message": "Abrir chat temporal" },
+  "shortcut_label_pin_chat": { "message": "Fijar/Desfijar chat" },
   "shortcut_panel_extension_heading": { "message": "Extensión" },
   "shortcut_panel_settings_label": { "message": "Configuración de atajos" },
   "shortcut_panel_settings_link_text": { "message": "Haz clic aquí" },
@@ -58,6 +59,14 @@
   "notification_temporary_chat_missing": {
     "message": "No se encontró el botón de chat temporal."
   },
+  "notification_conversation_menu_missing": {
+    "message": "No se encontró el menú de la conversación."
+  },
+  "notification_pin_menu_item_missing": {
+    "message": "No se encontró el elemento de menú para fijar/desfijar."
+  },
+  "notification_pin_chat": { "message": "Fijar chat" },
+  "notification_unpin_chat": { "message": "Desfijar chat" },
   "notification_error_with_reason": { "message": "Error: $1" },
   "error_unknown_mode": { "message": "Modo desconocido: $1" },
   "error_unknown_generic": { "message": "Error desconocido." },

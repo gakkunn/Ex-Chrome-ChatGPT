@@ -139,6 +139,10 @@
     "message": "Open Temporary Chat",
     "description": "Shortcut label."
   },
+  "shortcut_label_pin_chat": {
+    "message": "Pin/Unpin Chat",
+    "description": "Shortcut label."
+  },
   "shortcut_panel_extension_heading": {
     "message": "Extension",
     "description": "Heading added to ChatGPT's shortcut panel."
@@ -162,6 +166,22 @@
   "notification_temporary_chat_missing": {
     "message": "Temporary Chat button not found",
     "description": "Toast shown when the temporary chat button is unavailable."
+  },
+  "notification_conversation_menu_missing": {
+    "message": "Conversation menu not found",
+    "description": "Toast shown when the conversation menu trigger cannot be located."
+  },
+  "notification_pin_menu_item_missing": {
+    "message": "Pin/Unpin menu item not found",
+    "description": "Toast shown when the pin or unpin menu entry is missing."
+  },
+  "notification_pin_chat": {
+    "message": "Pin Chat",
+    "description": "Toast shown after pinning a chat."
+  },
+  "notification_unpin_chat": {
+    "message": "Unpin Chat",
+    "description": "Toast shown after unpinning a chat."
   },
   "notification_error_with_reason": {
     "message": "Error: $1",

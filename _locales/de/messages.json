@@ -48,6 +48,7 @@
   "shortcut_label_mode_instant": { "message": "Auf Modus Instant wechseln" },
   "shortcut_label_mode_thinking": { "message": "Auf Modus Thinking wechseln" },
   "shortcut_label_temporary_chat": { "message": "Temporären Chat öffnen" },
+  "shortcut_label_pin_chat": { "message": "Chat anpinnen/entpinnen" },
   "shortcut_panel_extension_heading": { "message": "Erweiterung" },
   "shortcut_panel_settings_label": { "message": "Kurzbefehlseinstellungen" },
   "shortcut_panel_settings_link_text": { "message": "Hier klicken" },
@@ -58,6 +59,14 @@
   "notification_temporary_chat_missing": {
     "message": "Schaltfläche für temporären Chat wurde nicht gefunden."
   },
+  "notification_conversation_menu_missing": {
+    "message": "Konversationsmenü wurde nicht gefunden."
+  },
+  "notification_pin_menu_item_missing": {
+    "message": "Menüeintrag zum Anpinnen/Entpinnen wurde nicht gefunden."
+  },
+  "notification_pin_chat": { "message": "Chat anpinnen" },
+  "notification_unpin_chat": { "message": "Chat entpinnen" },
   "notification_error_with_reason": { "message": "Fehler: $1" },
   "error_unknown_mode": { "message": "Unbekannter Modus: $1" },
   "error_unknown_generic": { "message": "Unbekannter Fehler." },

@@ -385,6 +385,82 @@ export class ShortcutsManager {
     }
   }
 
+  private findConversationMenuTrigger(): HTMLElement | null {
+    const container = document.querySelector('#conversation-header-actions');
+    if (!container) return null;
+
+    const trigger =
+      container.querySelector<HTMLElement>('[aria-haspopup="menu"][data-state]') ||
+      container.querySelector<HTMLElement>('button[aria-haspopup="menu"]');
+    if (!trigger) return null;
+
+    if (trigger instanceof HTMLButtonElement) return trigger;
+    return trigger.querySelector<HTMLElement>('button') || trigger;
+  }
+
+  private normalizeMenuLabel(label: string): string {
+    return label.replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+
+  private findPinToggleMenuItem(
+    menu: HTMLElement
+  ): { item: HTMLElement; action: 'pin' | 'unpin' } | null {
+    const items = Array.from(menu.querySelectorAll<HTMLElement>('[role="menuitem"]'));
+    const localizedPin = this.normalizeMenuLabel(getMessage('notification_pin_chat'));
+    const localizedUnpin = this.normalizeMenuLabel(getMessage('notification_unpin_chat'));
+    const normalized = items.map((item) => ({
+      item,
+      label: this.normalizeMenuLabel(item.textContent || ''),
+    }));
+
+    const unpinItem = normalized.find(
+      (entry) => entry.label === 'unpin chat' || entry.label === localizedUnpin
+    );
+    if (unpinItem) return { item: unpinItem.item, action: 'unpin' };
+
+    const pinItem = normalized.find(
+      (entry) => entry.label === 'pin chat' || entry.label === localizedPin
+    );
+    if (pinItem) return { item: pinItem.item, action: 'pin' };
+
+    return null;
+  }
+
+  private async togglePinChat() {
+    try {
+      await this.closeAllMenus();
+
+      const trigger = this.findConversationMenuTrigger();
+      if (!trigger) {
+        showNotification(getMessage('notification_conversation_menu_missing'));
+        return;
+      }
+
+      humanClick(trigger);
+      const menu = (await waitFor(() => this.getOpenMenuRoot(), { timeout: 2000 })) as HTMLElement;
+      if (!menu) {
+        showNotification(getMessage('notification_conversation_menu_missing'));
+        return;
+      }
+
+      const target = this.findPinToggleMenuItem(menu);
+      if (!target) {
+        showNotification(getMessage('notification_pin_menu_item_missing'));
+        return;
+      }
+
+      void this.focusInputAfterMenuClose();
+      humanClick(target.item);
+
+      showNotification(
+        getMessage(target.action === 'pin' ? 'notification_pin_chat' : 'notification_unpin_chat'),
+        'success'
+      );
+    } catch (error: unknown) {
+      this.notifyError(error);
+    }
+  }
+
   private startContinuousScroll(container: Element, direction: 'up' | 'down') {
     this.stopContinuousScroll();
 
@@ -606,6 +682,12 @@ export class ShortcutsManager {
     if (this.matchesShortcut('temporaryChat', e)) {
       e.preventDefault();
       this.openTemporaryChat();
+      return;
+    }
+
+    if (this.matchesShortcut('togglePinChat', e)) {
+      e.preventDefault();
+      this.togglePinChat();
       return;
     }
   }

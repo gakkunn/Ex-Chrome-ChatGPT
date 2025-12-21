@@ -48,6 +48,7 @@
   "shortcut_label_mode_instant": { "message": "Passer en mode Instant" },
   "shortcut_label_mode_thinking": { "message": "Passer en mode Thinking" },
   "shortcut_label_temporary_chat": { "message": "Ouvrir un chat temporaire" },
+  "shortcut_label_pin_chat": { "message": "Épingler/Désépingler le chat" },
   "shortcut_panel_extension_heading": { "message": "Extension" },
   "shortcut_panel_settings_label": { "message": "Paramètres des raccourcis" },
   "shortcut_panel_settings_link_text": { "message": "Cliquer ici" },
@@ -58,6 +59,14 @@
   "notification_temporary_chat_missing": {
     "message": "Bouton de chat temporaire introuvable."
   },
+  "notification_conversation_menu_missing": {
+    "message": "Le menu de conversation est introuvable."
+  },
+  "notification_pin_menu_item_missing": {
+    "message": "L'option Épingler/Désépingler est introuvable."
+  },
+  "notification_pin_chat": { "message": "Épingler le chat" },
+  "notification_unpin_chat": { "message": "Désépingler le chat" },
   "notification_error_with_reason": { "message": "Erreur : $1" },
   "error_unknown_mode": { "message": "Mode inconnu : $1" },
   "error_unknown_generic": { "message": "Erreur inconnue." },
