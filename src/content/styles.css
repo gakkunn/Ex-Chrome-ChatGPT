@@ -49,10 +49,6 @@ html[data-chatgpt-unified-wide='true'] button[data-testid='model-switcher-dropdo
   display: none;
 }
 
-html[data-chatgpt-unified-wide='true'] button[data-testid='share-chat-button'] > div {
-  font-size: 0 !important;
-}
-
 html[data-chatgpt-unified-wide='true'] .\@thread-xl\/thread\:pt-header-height > :last-child {
   display: none !important;
 }
@@ -68,10 +64,19 @@ html[data-chatgpt-unified-wide='true']
   display: none !important;
 }
 
-/* Delete Project text */
+/* Hide header action labels */
 html[data-chatgpt-unified-wide='true']
-  button[data-testid='start-group-chat-from-conversation-button']
-  .w-full {
+  #conversation-header-actions
+  [data-testid='share-chat-button']
+  > div,
+html[data-chatgpt-unified-wide='true']
+  #conversation-header-actions
+  [data-testid='start-group-chat-from-conversation-button']
+  > div,
+html[data-chatgpt-unified-wide='true']
+  #conversation-header-actions
+  [data-testid='open-personalization-settings-button']
+  > div {
   font-size: 0 !important;
 }
 
@@ -82,34 +87,24 @@ html[data-chatgpt-unified-wide='true'] #page-header .flex.items-center.justify-c
   right: 5px !important;
 }
 
-/* Arrange 3 buttons vertically in reverse order */
+/* Arrange 4 buttons vertically in reverse order */
 html[data-chatgpt-unified-wide='true'] #conversation-header-actions {
   display: flex !important;
   flex-direction: column-reverse !important;
   align-items: center !important;
+  gap: 6px !important;
+  margin-right: 10px !important;
 }
 
-/* Adjust Share button margins (set margin / padding to 0) */
-html[data-chatgpt-unified-wide='true']
-  #conversation-header-actions
-  [data-testid='share-chat-button'] {
-  margin: 0 !important;
-  padding: 0 !important;
+html[data-chatgpt-unified-wide='true'] #conversation-header-actions > div {
+  display: flex !important;
+  flex-direction: column-reverse !important;
+  align-items: center !important;
+  gap: 6px !important;
 }
 
-/* Adjust Add people button margins */
-html[data-chatgpt-unified-wide='true']
-  #conversation-header-actions
-  [data-testid='start-group-chat-from-conversation-button'] {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* Right margin of … menu (3-dot) button */
-html[data-chatgpt-unified-wide='true']
-  #conversation-header-actions
-  [data-testid='conversation-options-button'] {
-  margin-right: 7px !important;
+html[data-chatgpt-unified-wide='true'] #conversation-header-actions .gap-1\.5 {
+  gap: 0 !important;
 }
 
 html[data-chatgpt-unified-wide='true'] main .\@w-xl\/main\:pt-header-height,
