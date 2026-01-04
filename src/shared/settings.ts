@@ -54,6 +54,15 @@ export const DEFAULT_FEATURE_TOGGLES: FeatureToggles = {
   otherShortcuts: true,
 };
 
+const isMacPlatform =
+  typeof navigator !== 'undefined' && !!navigator.platform
+    ? navigator.platform.toLowerCase().includes('mac')
+    : false;
+
+const MODE_INSTANT_DEFAULT_BINDING: KeyBinding = isMacPlatform
+  ? { key: '0', code: 'Digit0', mod: true, shift: true }
+  : { key: '7', code: 'Digit7', mod: true, shift: true };
+
 export const SHORTCUT_DEFINITIONS: ShortcutDefinition[] = [
   {
     id: 'scrollTop',
@@ -113,7 +122,7 @@ export const SHORTCUT_DEFINITIONS: ShortcutDefinition[] = [
     id: 'modeInstant',
     labelKey: 'shortcut_label_mode_instant',
     category: 'otherShortcuts',
-    defaultBindings: [{ key: '0', code: 'Digit0', mod: true, shift: true }],
+    defaultBindings: [MODE_INSTANT_DEFAULT_BINDING],
   },
   {
     id: 'modeThinking',
