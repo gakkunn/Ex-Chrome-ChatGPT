@@ -29,7 +29,8 @@ type MessageState = { type: 'error' | 'warning'; text: string } | null;
 type InputStateMap = Partial<Record<ShortcutId, 'error' | 'warning'>>;
 
 const GITHUB_URL = 'https://github.com/gakkunn/Ex-Chrome-ChatGPT';
-const SUPPORT_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScm_N4J2Sv-WE0Y-fdU-gwUl4OfWM81v1NaGjZ16PSZbrVm_w/viewform';
+const SUPPORT_FORM_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLScm_N4J2Sv-WE0Y-fdU-gwUl4OfWM81v1NaGjZ16PSZbrVm_w/viewform';
 const COFFEE_URL = 'https://buymeacoffee.com/gakkunn';
 
 const ICON_GITHUB_SRC = '/img/github.svg';
