@@ -74,7 +74,7 @@ npm run build   # or npm run dev (watch build to dist/ for development)
 
 1. After installing the extension, pin the icon from the Chrome toolbar.
 2. Use the popup to toggle features on/off and click any shortcut input field to rebind it with conflict detection.
-3. Examples: `j`/`k` for scrolling, `Shift + Space` to toggle input focus, `Cmd/Ctrl + Enter` for safe send, `Cmd/Ctrl + Shift + 8/9/0` to switch to Auto/Thinking/Instant modes, `Cmd/Ctrl + I` to open Temporary Chat, `Cmd/Ctrl + Shift + P` to pin/unpin the current chat.
+3. Examples: `j`/`k` for scrolling, `Shift + Space` to toggle input focus, `Cmd/Ctrl + Enter` for safe send, `Cmd/Ctrl + Shift + 8/9/0` to switch to Auto/Thinking/Instant modes (Instant uses `Cmd/Ctrl + Shift + 7` on Windows), `Cmd/Ctrl + I` to open Temporary Chat, `Cmd/Ctrl + Shift + P` to pin/unpin the current chat.
 
 ---
 
