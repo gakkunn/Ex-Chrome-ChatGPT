@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 1.1.1 - 2026-01-04
+### Fixes
+- Use platform-specific default for Instant mode shortcut (Fixes shared logic)
+
+### Documentation
+- Update shortcut examples for Windows Instant mode
+
+### Styles
+- Fix line length formatting in Popup
+
 ## 1.1.0 - 2025-12-20
 ### Features
 - Add Pin/Unpin chat shortcut (Cmd/Ctrl + Shift + P) with toast feedback
