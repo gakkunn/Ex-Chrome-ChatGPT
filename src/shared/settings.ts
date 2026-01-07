@@ -15,7 +15,8 @@ export type ShortcutId =
   | 'modeInstant'
   | 'modeThinking'
   | 'temporaryChat'
-  | 'togglePinChat';
+  | 'togglePinChat'
+  | 'branchChat';
 
 export type KeyBinding = {
   key: string;
@@ -141,6 +142,12 @@ export const SHORTCUT_DEFINITIONS: ShortcutDefinition[] = [
     labelKey: 'shortcut_label_pin_chat',
     category: 'otherShortcuts',
     defaultBindings: [{ key: 'P', code: 'KeyP', mod: true, shift: true }],
+  },
+  {
+    id: 'branchChat',
+    labelKey: 'shortcut_label_branch_chat',
+    category: 'otherShortcuts',
+    defaultBindings: [{ key: 'b', code: 'KeyB', mod: true }],
   },
 ];
 

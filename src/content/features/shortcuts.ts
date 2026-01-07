@@ -461,6 +461,37 @@ export class ShortcutsManager {
     }
   }
 
+  private async branchChat(): Promise<void> {
+    try {
+      await this.closeAllMenus();
+
+      const lastAssistantTurn = document.querySelector(
+        'article[data-turn="assistant"]:last-of-type'
+      );
+      if (!lastAssistantTurn) {
+        showNotification(getMessage('notification_branch_chat_not_found'));
+        return;
+      }
+
+      const moreActionsBtn = lastAssistantTurn.querySelector(
+        'button[aria-label="More actions"]'
+      ) as HTMLElement | null;
+      if (!moreActionsBtn) {
+        showNotification(getMessage('notification_branch_chat_not_found'));
+        return;
+      }
+
+      humanClick(moreActionsBtn);
+
+      const branchItem = await waitFor('[role="menuitem"][aria-label="Branch in new chat"]', {
+        timeout: 2000,
+      });
+      humanClick(branchItem);
+    } catch (error: unknown) {
+      this.notifyError(error);
+    }
+  }
+
   private startContinuousScroll(container: Element, direction: 'up' | 'down') {
     this.stopContinuousScroll();
 
@@ -688,6 +719,12 @@ export class ShortcutsManager {
     if (this.matchesShortcut('togglePinChat', e)) {
       e.preventDefault();
       this.togglePinChat();
+      return;
+    }
+
+    if (this.matchesShortcut('branchChat', e)) {
+      e.preventDefault();
+      this.branchChat();
       return;
     }
   }
