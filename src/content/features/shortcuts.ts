@@ -17,6 +17,10 @@ import { waitFor, humanClick, showNotification, getInputField } from './utils';
 
 type ScrollType = 'top' | 'bottom' | 'up' | 'down' | 'halfUp' | 'halfDown';
 type ModeName = 'auto' | 'instant' | 'thinking';
+type ScrollSnapshot = {
+  container: Element;
+  scrollTop: number;
+};
 
 export class ShortcutsManager {
   private scrollingDirection: 'up' | 'down' | null = null;
@@ -24,6 +28,7 @@ export class ShortcutsManager {
   private scrollingContainer: Element | null = null;
   private scrollingKey: string | null = null;
   private readonly scrollingSpeed = 20; // px per frame (60fps = 300px/s)
+  private scrollRestoreCleanup: (() => void) | null = null;
   private switching = false;
   private settings: ExtensionSettings;
   private focusToggle: () => void;
@@ -296,6 +301,7 @@ export class ShortcutsManager {
       humanClick(trigger);
       void this.focusInputAfterMenuClose();
     } catch (error: unknown) {
+      this.clearScrollRestore();
       this.notifyError(error);
     }
   }
@@ -481,12 +487,15 @@ export class ShortcutsManager {
         return;
       }
 
-      humanClick(moreActionsBtn);
+      const scrollSnapshot = this.captureScrollSnapshot();
+      this.scheduleScrollRestore(scrollSnapshot);
+
+      humanClick(moreActionsBtn, { scroll: false });
 
       const branchItem = await waitFor('[role="menuitem"][aria-label="Branch in new chat"]', {
         timeout: 2000,
       });
-      humanClick(branchItem);
+      humanClick(branchItem, { scroll: false });
     } catch (error: unknown) {
       this.notifyError(error);
     }
@@ -542,6 +551,120 @@ export class ShortcutsManager {
     requestAnimationFrame(animate);
   }
 
+  private clearScrollRestore() {
+    if (this.scrollRestoreCleanup) {
+      this.scrollRestoreCleanup();
+      this.scrollRestoreCleanup = null;
+    }
+  }
+
+  private getScrollContainer(): Element {
+    const huge =
+      document.querySelector('div.flex.flex-col.text-sm.thread-xl\\:pt-header-height.pb-25') ||
+      document.querySelector('div.flex.flex-col.text-sm');
+
+    let container: Element = document.scrollingElement || document.documentElement || document.body;
+    if (huge) {
+      let cur: Element | null = huge;
+      while (cur && cur !== document.body) {
+        const st = getComputedStyle(cur);
+        if (/(auto|scroll)/.test(st.overflowY) && cur.scrollHeight > cur.clientHeight + 8) {
+          container = cur;
+          break;
+        }
+        cur = cur.parentElement;
+      }
+    }
+
+    return container;
+  }
+
+  private captureScrollSnapshot(): ScrollSnapshot {
+    const container = this.getScrollContainer();
+    return {
+      container,
+      scrollTop: container.scrollTop,
+    };
+  }
+
+  private scheduleScrollRestore(snapshot: ScrollSnapshot) {
+    this.clearScrollRestore();
+
+    const container = snapshot.container;
+    if (!container) return;
+
+    let active = true;
+    let restored = false;
+    let wasHidden = document.hidden;
+    const timeouts: number[] = [];
+    const DURATION = 1500;
+
+    const restore = () => {
+      if (!active || !container.isConnected) return;
+      container.scrollTop = snapshot.scrollTop;
+    };
+
+    const runBurst = () => {
+      const start = performance.now();
+      const tick = () => {
+        if (!active) return;
+        restore();
+        if (performance.now() - start < DURATION) {
+          requestAnimationFrame(tick);
+        }
+      };
+      tick();
+    };
+
+    const cleanup = () => {
+      if (!active) return;
+      active = false;
+      window.removeEventListener('focus', onFocus);
+      document.removeEventListener('visibilitychange', onVisibility);
+      document.removeEventListener('wheel', cancel);
+      document.removeEventListener('touchstart', cancel);
+      document.removeEventListener('keydown', cancel);
+      timeouts.forEach((id) => clearTimeout(id));
+      if (this.scrollRestoreCleanup === cleanup) {
+        this.scrollRestoreCleanup = null;
+      }
+    };
+
+    const triggerRestore = () => {
+      if (!active || restored) return;
+      restored = true;
+      runBurst();
+      timeouts.push(window.setTimeout(cleanup, DURATION + 200));
+    };
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        wasHidden = true;
+        return;
+      }
+      if (wasHidden) {
+        triggerRestore();
+      }
+    };
+
+    const onFocus = () => {
+      if (wasHidden) {
+        triggerRestore();
+      }
+    };
+
+    const cancel = () => cleanup();
+
+    window.addEventListener('focus', onFocus);
+    document.addEventListener('visibilitychange', onVisibility);
+    document.addEventListener('wheel', cancel, { passive: true });
+    document.addEventListener('touchstart', cancel, { passive: true });
+    document.addEventListener('keydown', cancel);
+
+    this.scrollRestoreCleanup = cleanup;
+
+  }
+
   private handleVimScroll(e: KeyboardEvent, type: ScrollType): boolean {
     const ae = document.activeElement;
     const isEditable =
@@ -551,22 +674,7 @@ export class ShortcutsManager {
 
     if (isEditable) return false;
 
-    const huge =
-      document.querySelector('div.flex.flex-col.text-sm.thread-xl\\:pt-header-height.pb-25') ||
-      document.querySelector('div.flex.flex-col.text-sm');
-
-    let container: Element = document.scrollingElement || document.documentElement || document.body;
-    if (huge) {
-      let cur = huge;
-      while (cur && cur !== document.body) {
-        const st = getComputedStyle(cur);
-        if (/(auto|scroll)/.test(st.overflowY) && cur.scrollHeight > cur.clientHeight + 8) {
-          container = cur;
-          break;
-        }
-        cur = cur.parentElement as Element;
-      }
-    }
+    const container = this.getScrollContainer();
 
     e.preventDefault();
     e.stopPropagation();

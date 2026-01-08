@@ -53,7 +53,7 @@ export function showNotification(message: string, type: 'success' | 'error' = 'e
   }, 1500);
 }
 
-export function humanClick(element: Element) {
+export function humanClick(element: Element, options: { scroll?: boolean } = {}) {
   if (!element) throw new Error('No element to click');
   if (
     (element as HTMLButtonElement | HTMLInputElement).disabled ||
@@ -61,7 +61,10 @@ export function humanClick(element: Element) {
   )
     return;
 
-  element.scrollIntoView({ block: 'center', inline: 'center' });
+  const { scroll = true } = options;
+  if (scroll) {
+    element.scrollIntoView({ block: 'center', inline: 'center' });
+  }
   const rect = element.getBoundingClientRect();
   const clientX = rect.left + rect.width / 2;
   const clientY = rect.top + rect.height / 2;
