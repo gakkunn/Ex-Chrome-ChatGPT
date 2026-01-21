@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+## 1.2.0 - 2026-01-21
+### Features
+- Add Branch Chat shortcut (Cmd/Ctrl + B) to branch from the last assistant message
+- Add a Review call-to-action in the popup footer (prompt + link)
+
+### Fixes
+- Preserve scroll position when triggering the Branch Chat shortcut
+
+### Documentation
+- Update README for the Branch Chat feature
+
 ## 1.1.1 - 2026-01-04
 ### Fixes
 - Use platform-specific default for Instant mode shortcut (Fixes shared logic)

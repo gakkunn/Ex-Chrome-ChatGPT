@@ -518,7 +518,6 @@ export function App() {
           </section>
         </>
       )}
-
     </div>
   );
 }

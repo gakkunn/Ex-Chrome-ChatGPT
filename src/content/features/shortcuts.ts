@@ -662,7 +662,6 @@ export class ShortcutsManager {
     document.addEventListener('keydown', cancel);
 
     this.scrollRestoreCleanup = cleanup;
-
   }
 
   private handleVimScroll(e: KeyboardEvent, type: ScrollType): boolean {

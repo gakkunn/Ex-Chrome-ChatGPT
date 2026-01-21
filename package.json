@@ -1,6 +1,6 @@
 {
   "name": "chatgpt-shortcut-effective-extension",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Safer send, vim-like scroll, model toggles, temporary chats, and clean UI for ChatGPT.",
   "type": "module",
   "scripts": {
