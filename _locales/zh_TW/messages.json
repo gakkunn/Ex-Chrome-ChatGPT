@@ -10,6 +10,9 @@
   "popup_section_features": { "message": "功能" },
   "popup_section_shortcuts": { "message": "快捷鍵" },
   "popup_loading": { "message": "正在載入設定..." },
+  "popup_footer_review_prompt": {
+    "message": "哪怕只留下一句簡短的評論也會讓我由衷地開心。"
+  },
   "popup_feature_label_vim_scroll": { "message": "Vim 風格捲動" },
   "popup_feature_label_wide_screen": { "message": "寬螢幕（乾淨介面 + 聚焦）" },
   "popup_feature_label_safe_send": { "message": "使用 Cmd/Ctrl + Enter 傳送" },

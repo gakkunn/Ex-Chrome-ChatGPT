@@ -10,6 +10,9 @@
   "popup_section_features": { "message": "Funktionen" },
   "popup_section_shortcuts": { "message": "Kurzbefehle" },
   "popup_loading": { "message": "Einstellungen werden geladen..." },
+  "popup_footer_review_prompt": {
+    "message": "Schon ein kurzer Kommentar würde mich von Herzen freuen."
+  },
   "popup_feature_label_vim_scroll": { "message": "Scrollen wie in Vim" },
   "popup_feature_label_wide_screen": { "message": "Breitbild (Clean UI + Fokus)" },
   "popup_feature_label_safe_send": { "message": "Mit Cmd/Ctrl + Eingabetaste senden" },

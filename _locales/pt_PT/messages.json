@@ -10,6 +10,9 @@
   "popup_section_features": { "message": "Funcionalidades" },
   "popup_section_shortcuts": { "message": "Atalhos" },
   "popup_loading": { "message": "A carregar definições..." },
+  "popup_footer_review_prompt": {
+    "message": "Mesmo um comentário curto me alegraria do fundo do coração."
+  },
   "popup_feature_label_vim_scroll": { "message": "Deslocação estilo Vim" },
   "popup_feature_label_wide_screen": { "message": "Ecrã largo (IU limpa + foco)" },
   "popup_feature_label_safe_send": { "message": "Enviar com Cmd/Ctrl + Enter" },

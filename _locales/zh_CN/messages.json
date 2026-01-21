@@ -10,6 +10,9 @@
   "popup_section_features": { "message": "功能" },
   "popup_section_shortcuts": { "message": "快捷键" },
   "popup_loading": { "message": "正在加载设置..." },
+  "popup_footer_review_prompt": {
+    "message": "哪怕只留一句简短的评论也会让我由衷地开心。"
+  },
   "popup_feature_label_vim_scroll": { "message": "Vim 风格滚动" },
   "popup_feature_label_wide_screen": { "message": "宽屏（干净界面 + 聚焦）" },
   "popup_feature_label_safe_send": { "message": "使用 Cmd/Ctrl + Enter 发送" },

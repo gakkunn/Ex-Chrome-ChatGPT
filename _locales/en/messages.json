@@ -35,6 +35,10 @@
     "message": "Loading settings...",
     "description": "Helper text shown while storage sync is pending."
   },
+  "popup_footer_review_prompt": {
+    "message": "Even a short comment would truly make me happy",
+    "description": "Message shown above the footer links encouraging reviews."
+  },
   "popup_feature_label_vim_scroll": {
     "message": "Vim-like Scroll",
     "description": "Toggle label for the vim scroll feature."

@@ -10,6 +10,9 @@
   "popup_section_features": { "message": "Fonctionnalités" },
   "popup_section_shortcuts": { "message": "Raccourcis" },
   "popup_loading": { "message": "Chargement des paramètres..." },
+  "popup_footer_review_prompt": {
+    "message": "Même un bref commentaire me ferait chaud au cœur."
+  },
   "popup_feature_label_vim_scroll": { "message": "Défilement façon Vim" },
   "popup_feature_label_wide_screen": { "message": "Grand écran (UI épurée + focus)" },
   "popup_feature_label_safe_send": { "message": "Envoyer avec Cmd/Ctrl + Entrée" },

@@ -10,6 +10,9 @@
   "popup_section_features": { "message": "기능" },
   "popup_section_shortcuts": { "message": "단축키" },
   "popup_loading": { "message": "설정을 불러오는 중..." },
+  "popup_footer_review_prompt": {
+    "message": "짧은 코멘트만 남겨도 마음 깊이 기쁩니다."
+  },
   "popup_feature_label_vim_scroll": { "message": "Vim 스타일 스크롤" },
   "popup_feature_label_wide_screen": { "message": "와이드 화면(클린 UI + 포커스)" },
   "popup_feature_label_safe_send": { "message": "Cmd/Ctrl + Enter 로 보내기" },

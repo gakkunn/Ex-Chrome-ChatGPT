@@ -10,6 +10,9 @@
   "popup_section_features": { "message": "機能" },
   "popup_section_shortcuts": { "message": "ショートカット" },
   "popup_loading": { "message": "設定を読み込んでいます..." },
+  "popup_footer_review_prompt": {
+    "message": "短いコメントでもくれると心の底から喜びます。"
+  },
   "popup_feature_label_vim_scroll": { "message": "Vim 風スクロール" },
   "popup_feature_label_wide_screen": { "message": "ワイド画面（クリーン UI + フォーカス）" },
   "popup_feature_label_safe_send": { "message": "Cmd/Ctrl + Enter で送信" },

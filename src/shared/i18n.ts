@@ -9,6 +9,7 @@ const FALLBACK_MESSAGES = {
   popup_section_features: 'Features',
   popup_section_shortcuts: 'Shortcuts',
   popup_loading: 'Loading settings...',
+  popup_footer_review_prompt: 'Even a short comment would truly make me happy',
   popup_feature_label_vim_scroll: 'Vim-like Scroll',
   popup_feature_label_wide_screen: 'Wide Screen (Clean UI + Focus)',
   popup_feature_label_safe_send: 'Send with Cmd/Ctrl + Enter',
