@@ -32,10 +32,13 @@ const GITHUB_URL = 'https://github.com/gakkunn/Ex-Chrome-ChatGPT';
 const SUPPORT_FORM_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLScm_N4J2Sv-WE0Y-fdU-gwUl4OfWM81v1NaGjZ16PSZbrVm_w/viewform';
 const COFFEE_URL = 'https://buymeacoffee.com/gakkunn';
+const REVIEW_URL =
+  'https://chromewebstore.google.com/detail/chatgpt-shortcut-effectiv/aoemceeicbdlapmljecabaegdjnifllg/reviews?hl=en&authuser=0';
 
 const ICON_GITHUB_SRC = '/img/github.svg';
 const ICON_SUPPORT_SRC = '/img/support.svg';
 const ICON_COFFEE_SRC = '/img/coffee.svg';
+const ICON_REVIEW_SRC = '/img/review.svg';
 
 const FEATURE_LABEL_KEYS: Record<FeatureCategory, MessageKey> = {
   vimScroll: 'popup_feature_label_vim_scroll',
@@ -382,6 +385,64 @@ export function App() {
         </button>
       </header>
 
+      <footer class="popup-footer">
+        <p class="footer-message">{getMessage('popup_footer_review_prompt')}</p>
+        <section class="links">
+          <div>
+            <a
+              class="footer-button github-button"
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Contribute"
+            >
+              <span>
+                <img class="icon" src={ICON_GITHUB_SRC} alt="Contribute" />
+              </span>
+            </a>
+          </div>
+          <div>
+            <a
+              class="footer-button question-button"
+              href={SUPPORT_FORM_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Support"
+            >
+              <span>
+                <img class="icon" src={ICON_SUPPORT_SRC} alt="Report a problem" />
+              </span>
+            </a>
+          </div>
+          <div>
+            <a
+              class="footer-button review-button"
+              href={REVIEW_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Review"
+            >
+              <span>
+                <img class="icon" src={ICON_REVIEW_SRC} alt="Review" />
+              </span>
+            </a>
+          </div>
+          <div>
+            <a
+              class="footer-button coffee-button"
+              href={COFFEE_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Buy me a coffee"
+            >
+              <span>
+                <img class="icon" src={ICON_COFFEE_SRC} alt="Buy me a coffee" />
+              </span>
+            </a>
+          </div>
+        </section>
+      </footer>
+
       {loading && <p class="helper-text">{getMessage('popup_loading')}</p>}
 
       {!loading && settings && (
@@ -458,49 +519,6 @@ export function App() {
         </>
       )}
 
-      <footer class="popup-footer">
-        <section class="links">
-          <div>
-            <a
-              class="footer-button github-button"
-              href={GITHUB_URL}
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label="Contribute"
-            >
-              <span>
-                <img class="icon" src={ICON_GITHUB_SRC} alt="Contribute" />
-              </span>
-            </a>
-          </div>
-          <div>
-            <a
-              class="footer-button question-button"
-              href={SUPPORT_FORM_URL}
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label="Support"
-            >
-              <span>
-                <img class="icon" src={ICON_SUPPORT_SRC} alt="Report a problem" />
-              </span>
-            </a>
-          </div>
-          <div>
-            <a
-              class="footer-button coffee-button"
-              href={COFFEE_URL}
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label="Buy me a coffee"
-            >
-              <span>
-                <img class="icon" src={ICON_COFFEE_SRC} alt="Buy me a coffee" />
-              </span>
-            </a>
-          </div>
-        </section>
-      </footer>
     </div>
   );
 }
