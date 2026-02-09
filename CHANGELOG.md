@@ -1,8 +1,17 @@
 # Changelog
 
 ## Unreleased
+
+## 1.3.0 - 2026-02-09
 ### Features
-- Add a feature toggle to keep scroll position when sending messages
+- Add keep-scroll-on-send behavior and expose its toggle in the popup
+- Add a shortcut to copy the last user message (`Cmd/Ctrl + Shift + Y`)
+
+### Documentation
+- Document the keep-scroll-on-send feature in README and changelog
+
+### Styles
+- Simplify popup shortcut labels and highlight the new copy shortcut
 
 ## 1.2.0 - 2026-01-21
 ### Features
