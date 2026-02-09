@@ -8,7 +8,7 @@
 
 ## Overview
 
-A Chrome extension that makes ChatGPT easier to use with a keyboard-centric workflow. It provides safe send (Cmd/Ctrl+Enter), Vim-like scrolling, model-switching shortcuts, chat pin/unpin, quick access to Temporary Chat, and UI cleanup—all in one package. You can toggle each feature on/off and customize shortcuts directly from the popup.
+A Chrome extension that makes ChatGPT easier to use with a keyboard-centric workflow. It provides safe send (Cmd/Ctrl+Enter), Vim-like scrolling, model-switching shortcuts, chat pin/unpin, quick access to Temporary Chat, send-time scroll preservation, and UI cleanup—all in one package. You can toggle each feature on/off and customize shortcuts directly from the popup.
 
 This is an open-source extension implemented based on Chrome Extension Manifest v3.
 
@@ -19,6 +19,7 @@ This is an open-source extension implemented based on Chrome Extension Manifest 
 - **Vim-like scrolling**: Customizable `j`/`k` navigation, half-page jumps, and more
 - **Wide Screen + Focus toggle**: Cleaner, wider layout while preserving input field focus
 - **Safe send**: Prevents accidental Enter-only sends; requires Cmd/Ctrl+Enter to submit
+- **Keep scroll position on send**: Optionally prevent automatic jump-to-bottom after sending
 - **Model operation shortcuts**: Quickly open the model selector or switch directly to Auto/Instant/Thinking modes
 - **Pin/Unpin chat**: Toggle chat pin status from the keyboard
 - **Branch chat**: Create a new conversation branch from the last assistant message

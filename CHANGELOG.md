@@ -1,6 +1,8 @@
 # Changelog
 
 ## Unreleased
+### Features
+- Add a feature toggle to keep scroll position when sending messages
 
 ## 1.2.0 - 2026-01-21
 ### Features
