@@ -488,15 +488,14 @@ export function App() {
             )}
             {visibleDefinitions.map((def) => {
               const bindings = getBindingsFor(def);
+              const showNewBadge = def.id === 'copyLastUserMessage';
               return (
                 <div class="shortcut-row" key={def.id}>
                   <div class="shortcut-label">
-                    <p>{getMessage(def.labelKey)}</p>
-                    <small>
-                      {def.category === 'vimScroll'
-                        ? getMessage('popup_label_navigation')
-                        : getMessage('popup_label_action')}
-                    </small>
+                    <p class="shortcut-title">
+                      {getMessage(def.labelKey)}
+                      {showNewBadge && <span class="toggle-badge shortcut-new-badge">new</span>}
+                    </p>
                   </div>
                   <div
                     class={`shortcut-input ${
