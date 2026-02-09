@@ -56,6 +56,7 @@
   "shortcut_label_temporary_chat": { "message": "Abrir conversa temporária" },
   "shortcut_label_pin_chat": { "message": "Fixar/Desafixar chat" },
   "shortcut_label_branch_chat": { "message": "Ramificar chat" },
+  "shortcut_label_copy_last_user_message": { "message": "Copiar última mensagem do utilizador" },
   "shortcut_panel_extension_heading": { "message": "Extensão" },
   "shortcut_panel_settings_label": { "message": "Definições de atalho" },
   "shortcut_panel_settings_link_text": { "message": "Clique aqui" },
@@ -75,6 +76,12 @@
   "notification_pin_chat": { "message": "Fixar chat" },
   "notification_unpin_chat": { "message": "Desafixar chat" },
   "notification_branch_chat_not_found": { "message": "Nenhuma mensagem do assistente encontrada" },
+  "notification_copy_last_user_message_missing": {
+    "message": "Não foi encontrada nenhuma mensagem do utilizador para copiar."
+  },
+  "notification_copy_last_user_message_success": {
+    "message": "Última mensagem do utilizador copiada."
+  },
   "notification_error_with_reason": { "message": "Erro: $1" },
   "error_unknown_mode": { "message": "Modo desconhecido: $1" },
   "error_unknown_generic": { "message": "Erro desconhecido." },

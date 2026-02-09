@@ -503,6 +503,32 @@ export class ShortcutsManager {
     }
   }
 
+  private copyLastUserMessage() {
+    try {
+      const userTurns = Array.from(
+        document.querySelectorAll<HTMLElement>('article[data-turn="user"]')
+      );
+      const lastUserTurn = userTurns[userTurns.length - 1];
+      if (!lastUserTurn) {
+        showNotification(getMessage('notification_copy_last_user_message_missing'));
+        return;
+      }
+
+      const copyButton =
+        lastUserTurn.querySelector<HTMLElement>('button[data-testid="copy-turn-action-button"]') ||
+        lastUserTurn.querySelector<HTMLElement>('button[aria-label="Copy"]');
+      if (!copyButton) {
+        showNotification(getMessage('notification_copy_last_user_message_missing'));
+        return;
+      }
+
+      humanClick(copyButton, { scroll: false });
+      showNotification(getMessage('notification_copy_last_user_message_success'), 'success');
+    } catch (error: unknown) {
+      this.notifyError(error);
+    }
+  }
+
   private startContinuousScroll(container: Element, direction: 'up' | 'down') {
     this.stopContinuousScroll();
 
@@ -1000,6 +1026,12 @@ export class ShortcutsManager {
     if (this.matchesShortcut('branchChat', e)) {
       e.preventDefault();
       this.branchChat();
+      return;
+    }
+
+    if (this.matchesShortcut('copyLastUserMessage', e)) {
+      e.preventDefault();
+      this.copyLastUserMessage();
       return;
     }
   }

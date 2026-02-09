@@ -21,7 +21,8 @@ export type ShortcutId =
   | 'modeThinking'
   | 'temporaryChat'
   | 'togglePinChat'
-  | 'branchChat';
+  | 'branchChat'
+  | 'copyLastUserMessage';
 
 export type KeyBinding = {
   key: string;
@@ -154,6 +155,12 @@ export const SHORTCUT_DEFINITIONS: ShortcutDefinition[] = [
     labelKey: 'shortcut_label_branch_chat',
     category: 'otherShortcuts',
     defaultBindings: [{ key: 'b', code: 'KeyB', mod: true }],
+  },
+  {
+    id: 'copyLastUserMessage',
+    labelKey: 'shortcut_label_copy_last_user_message',
+    category: 'otherShortcuts',
+    defaultBindings: [{ key: 'Y', code: 'KeyY', mod: true, shift: true }],
   },
 ];
 

@@ -56,6 +56,7 @@
   "shortcut_label_temporary_chat": { "message": "Temporären Chat öffnen" },
   "shortcut_label_pin_chat": { "message": "Chat anpinnen/entpinnen" },
   "shortcut_label_branch_chat": { "message": "Chat verzweigen" },
+  "shortcut_label_copy_last_user_message": { "message": "Letzte Nutzernachricht kopieren" },
   "shortcut_panel_extension_heading": { "message": "Erweiterung" },
   "shortcut_panel_settings_label": { "message": "Kurzbefehlseinstellungen" },
   "shortcut_panel_settings_link_text": { "message": "Hier klicken" },
@@ -75,6 +76,12 @@
   "notification_pin_chat": { "message": "Chat anpinnen" },
   "notification_unpin_chat": { "message": "Chat entpinnen" },
   "notification_branch_chat_not_found": { "message": "Keine Assistenten-Nachricht gefunden" },
+  "notification_copy_last_user_message_missing": {
+    "message": "Keine Nutzernachricht zum Kopieren gefunden."
+  },
+  "notification_copy_last_user_message_success": {
+    "message": "Letzte Nutzernachricht kopiert."
+  },
   "notification_error_with_reason": { "message": "Fehler: $1" },
   "error_unknown_mode": { "message": "Unbekannter Modus: $1" },
   "error_unknown_generic": { "message": "Unbekannter Fehler." },

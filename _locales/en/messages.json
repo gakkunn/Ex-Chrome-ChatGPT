@@ -155,6 +155,10 @@
     "message": "Branch Chat",
     "description": "Shortcut label."
   },
+  "shortcut_label_copy_last_user_message": {
+    "message": "Copy Last User Message",
+    "description": "Shortcut label."
+  },
   "shortcut_panel_extension_heading": {
     "message": "Extension",
     "description": "Heading added to ChatGPT's shortcut panel."
@@ -198,6 +202,14 @@
   "notification_branch_chat_not_found": {
     "message": "No assistant message found",
     "description": "Toast shown when trying to branch but no assistant message exists."
+  },
+  "notification_copy_last_user_message_missing": {
+    "message": "No user message found to copy",
+    "description": "Toast shown when no user message copy target exists."
+  },
+  "notification_copy_last_user_message_success": {
+    "message": "Last user message copied",
+    "description": "Toast shown when copying the last user message succeeds."
   },
   "notification_error_with_reason": {
     "message": "Error: $1",
