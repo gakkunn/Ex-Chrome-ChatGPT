@@ -1,6 +1,11 @@
 import type { MessageKey } from './i18n';
 
-export type FeatureCategory = 'vimScroll' | 'wideScreen' | 'safeSend' | 'otherShortcuts';
+export type FeatureCategory =
+  | 'vimScroll'
+  | 'wideScreen'
+  | 'safeSend'
+  | 'preserveScrollOnSend'
+  | 'otherShortcuts';
 
 export type ShortcutId =
   | 'scrollTop'
@@ -52,6 +57,7 @@ export const DEFAULT_FEATURE_TOGGLES: FeatureToggles = {
   vimScroll: true,
   wideScreen: true,
   safeSend: true,
+  preserveScrollOnSend: false,
   otherShortcuts: true,
 };
 

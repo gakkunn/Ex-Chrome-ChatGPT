@@ -32,6 +32,10 @@ function mergeFeatureToggles(saved?: Partial<FeatureToggles>): FeatureToggles {
       typeof savedToggles.safeSend === 'boolean'
         ? savedToggles.safeSend
         : DEFAULT_FEATURE_TOGGLES.safeSend,
+    preserveScrollOnSend:
+      typeof savedToggles.preserveScrollOnSend === 'boolean'
+        ? savedToggles.preserveScrollOnSend
+        : DEFAULT_FEATURE_TOGGLES.preserveScrollOnSend,
   };
 }
 

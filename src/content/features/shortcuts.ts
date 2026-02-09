@@ -17,10 +17,12 @@ import { waitFor, humanClick, showNotification, getInputField } from './utils';
 
 type ScrollType = 'top' | 'bottom' | 'up' | 'down' | 'halfUp' | 'halfDown';
 type ModeName = 'auto' | 'instant' | 'thinking';
-type ScrollSnapshot = {
+type ScrollSnapshotEntry = {
   container: Element;
   scrollTop: number;
 };
+type ScrollSnapshot = ScrollSnapshotEntry[];
+type ScrollRestoreMode = 'focusAfterHidden' | 'immediate';
 
 export class ShortcutsManager {
   private scrollingDirection: 'up' | 'down' | null = null;
@@ -488,7 +490,7 @@ export class ShortcutsManager {
       }
 
       const scrollSnapshot = this.captureScrollSnapshot();
-      this.scheduleScrollRestore(scrollSnapshot);
+      this.scheduleScrollRestore(scrollSnapshot, 'focusAfterHidden');
 
       humanClick(moreActionsBtn, { scroll: false });
 
@@ -579,41 +581,189 @@ export class ShortcutsManager {
     return container;
   }
 
-  private captureScrollSnapshot(): ScrollSnapshot {
-    const container = this.getScrollContainer();
-    return {
-      container,
-      scrollTop: container.scrollTop,
-    };
+  private collectScrollableAncestors(from: Element | null, targets: Set<Element>) {
+    let current: Element | null = from;
+    while (current) {
+      const style = getComputedStyle(current);
+      if (
+        /(auto|scroll)/.test(style.overflowY) &&
+        current.scrollHeight > current.clientHeight + 8
+      ) {
+        targets.add(current);
+      }
+      current = current.parentElement;
+    }
   }
 
-  private scheduleScrollRestore(snapshot: ScrollSnapshot) {
+  private getScrollContainers(): Element[] {
+    const targets = new Set<Element>();
+    const primary = this.getScrollContainer();
+    const rootScroller = document.scrollingElement || document.documentElement || document.body;
+
+    if (rootScroller) targets.add(rootScroller);
+    if (primary) targets.add(primary);
+
+    const input = getInputField();
+    if (input) {
+      this.collectScrollableAncestors(input, targets);
+    }
+
+    const main = document.querySelector('main');
+    if (main) {
+      this.collectScrollableAncestors(main, targets);
+    }
+
+    return Array.from(targets);
+  }
+
+  private captureScrollSnapshot(): ScrollSnapshot {
+    return this.getScrollContainers().map((container) => ({
+      container,
+      scrollTop: container.scrollTop,
+    }));
+  }
+
+  private preserveScrollOnSend() {
+    if (!this.isEnabled('preserveScrollOnSend')) return;
+    const snapshot = this.captureScrollSnapshot();
+    this.scheduleScrollRestore(snapshot, 'immediate');
+  }
+
+  private isInputFocused(input: HTMLElement): boolean {
+    const active = document.activeElement;
+    return !!active && (active === input || input.contains(active));
+  }
+
+  private isKeyboardSend(e: KeyboardEvent): boolean {
+    if (e.key !== 'Enter' || e.isComposing || e.repeat || e.altKey || e.shiftKey) {
+      return false;
+    }
+
+    const input = getInputField();
+    if (!input || !this.isInputFocused(input)) return false;
+
+    if (e.ctrlKey || e.metaKey) return true;
+    return !this.isEnabled('safeSend');
+  }
+
+  private isComposerForm(form: HTMLFormElement): boolean {
+    const input = getInputField();
+    if (input && form.contains(input)) return true;
+
+    return !!form.querySelector(
+      'div.ProseMirror[contenteditable="true"], textarea, [data-testid*="send"]'
+    );
+  }
+
+  private isWithinComposer(element: Element): boolean {
+    const input = getInputField();
+    if (!input) return false;
+
+    const inputForm = input.closest('form');
+    const targetForm = element.closest('form');
+    if (inputForm && targetForm && inputForm === targetForm) return true;
+
+    const composerContainer = input.closest('#thread-bottom-container');
+    return !!composerContainer && composerContainer.contains(element);
+  }
+
+  private isSendButton(button: HTMLButtonElement): boolean {
+    if (button.disabled || button.getAttribute('aria-disabled') === 'true') return false;
+
+    const type = (button.getAttribute('type') || '').toLowerCase();
+    const form = button.closest('form');
+    if (
+      form instanceof HTMLFormElement &&
+      this.isComposerForm(form) &&
+      (type === '' || type === 'submit')
+    ) {
+      return true;
+    }
+
+    if (!this.isWithinComposer(button)) return false;
+
+    const testId = (button.getAttribute('data-testid') || '').toLowerCase();
+    if (testId.includes('send')) return true;
+
+    const label = (button.getAttribute('aria-label') || '').toLowerCase();
+    const title = (button.getAttribute('title') || '').toLowerCase();
+    return (
+      label.includes('send') ||
+      label.includes('submit') ||
+      title.includes('send') ||
+      title.includes('submit')
+    );
+  }
+
+  private handleDocumentClick(e: MouseEvent) {
+    if (!this.isEnabled('preserveScrollOnSend')) return;
+
+    const target = e.target;
+    if (!(target instanceof Element)) return;
+
+    const button = target.closest('button');
+    if (!(button instanceof HTMLButtonElement)) return;
+    if (!this.isSendButton(button)) return;
+
+    this.preserveScrollOnSend();
+  }
+
+  private handleDocumentSubmit(e: Event) {
+    if (!this.isEnabled('preserveScrollOnSend')) return;
+
+    const form = e.target;
+    if (!(form instanceof HTMLFormElement)) return;
+    if (!this.isComposerForm(form)) return;
+
+    this.preserveScrollOnSend();
+  }
+
+  private scheduleScrollRestore(
+    snapshot: ScrollSnapshot,
+    mode: ScrollRestoreMode = 'focusAfterHidden'
+  ) {
     this.clearScrollRestore();
 
-    const container = snapshot.container;
-    if (!container) return;
+    if (!snapshot.length) return;
 
     let active = true;
     let restored = false;
     let wasHidden = document.hidden;
     const timeouts: number[] = [];
-    const DURATION = 1500;
+    const BURST_DURATION = 1500;
+    const IMMEDIATE_RESTORE_TIMINGS = [0, 40, 80, 140, 220, 320, 460, 640, 860, 1150];
 
     const restore = () => {
-      if (!active || !container.isConnected) return;
-      container.scrollTop = snapshot.scrollTop;
+      if (!active) return;
+      snapshot.forEach((entry) => {
+        if (!entry.container.isConnected) return;
+        entry.container.scrollTop = entry.scrollTop;
+      });
     };
 
-    const runBurst = () => {
+    const runBurst = (duration: number) => {
       const start = performance.now();
       const tick = () => {
         if (!active) return;
         restore();
-        if (performance.now() - start < DURATION) {
+        if (performance.now() - start < duration) {
           requestAnimationFrame(tick);
         }
       };
       tick();
+    };
+
+    const runImmediateRestore = () => {
+      IMMEDIATE_RESTORE_TIMINGS.forEach((timing, index) => {
+        const timeoutId = window.setTimeout(() => {
+          if (!active) return;
+          restore();
+          if (index === IMMEDIATE_RESTORE_TIMINGS.length - 1) {
+            cleanup();
+          }
+        }, timing);
+        timeouts.push(timeoutId);
+      });
     };
 
     const cleanup = () => {
@@ -621,9 +771,10 @@ export class ShortcutsManager {
       active = false;
       window.removeEventListener('focus', onFocus);
       document.removeEventListener('visibilitychange', onVisibility);
-      document.removeEventListener('wheel', cancel);
-      document.removeEventListener('touchstart', cancel);
-      document.removeEventListener('keydown', cancel);
+      document.removeEventListener('wheel', cancel, true);
+      document.removeEventListener('touchstart', cancel, true);
+      document.removeEventListener('pointerdown', cancel, true);
+      document.removeEventListener('keydown', cancel, true);
       timeouts.forEach((id) => clearTimeout(id));
       if (this.scrollRestoreCleanup === cleanup) {
         this.scrollRestoreCleanup = null;
@@ -633,8 +784,12 @@ export class ShortcutsManager {
     const triggerRestore = () => {
       if (!active || restored) return;
       restored = true;
-      runBurst();
-      timeouts.push(window.setTimeout(cleanup, DURATION + 200));
+      if (mode === 'immediate') {
+        runImmediateRestore();
+        return;
+      }
+      runBurst(BURST_DURATION);
+      timeouts.push(window.setTimeout(cleanup, BURST_DURATION + 200));
     };
 
     const onVisibility = () => {
@@ -655,13 +810,20 @@ export class ShortcutsManager {
 
     const cancel = () => cleanup();
 
-    window.addEventListener('focus', onFocus);
-    document.addEventListener('visibilitychange', onVisibility);
-    document.addEventListener('wheel', cancel, { passive: true });
-    document.addEventListener('touchstart', cancel, { passive: true });
-    document.addEventListener('keydown', cancel);
+    if (mode === 'focusAfterHidden') {
+      window.addEventListener('focus', onFocus);
+      document.addEventListener('visibilitychange', onVisibility);
+    }
+    document.addEventListener('wheel', cancel, { passive: true, capture: true });
+    document.addEventListener('touchstart', cancel, { passive: true, capture: true });
+    document.addEventListener('pointerdown', cancel, { capture: true });
+    document.addEventListener('keydown', cancel, { capture: true });
 
     this.scrollRestoreCleanup = cleanup;
+
+    if (mode === 'immediate') {
+      triggerRestore();
+    }
   }
 
   private handleVimScroll(e: KeyboardEvent, type: ScrollType): boolean {
@@ -766,10 +928,16 @@ export class ShortcutsManager {
       }
     });
 
+    document.addEventListener('click', (e) => this.handleDocumentClick(e), true);
+    document.addEventListener('submit', (e) => this.handleDocumentSubmit(e), true);
     document.addEventListener('keydown', (e) => this.handleKeydown(e), true);
   }
 
   private handleKeydown(e: KeyboardEvent) {
+    if (this.isKeyboardSend(e)) {
+      this.preserveScrollOnSend();
+    }
+
     if (this.handleEnterKey(e)) return;
 
     if (this.isEnabled('vimScroll')) {
