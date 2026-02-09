@@ -51,6 +51,10 @@
     "message": "Send with Cmd/Ctrl + Enter",
     "description": "Toggle label for the safe send feature."
   },
+  "popup_feature_label_preserve_scroll_on_send": {
+    "message": "Keep Scroll Position On Send",
+    "description": "Toggle label for preserving scroll position when sending a message."
+  },
   "popup_feature_label_other_shortcuts": {
     "message": "Other Shortcuts",
     "description": "Toggle label for additional shortcuts."

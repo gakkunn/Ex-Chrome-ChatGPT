@@ -16,6 +16,9 @@
   "popup_feature_label_vim_scroll": { "message": "Scrollen wie in Vim" },
   "popup_feature_label_wide_screen": { "message": "Breitbild (Clean UI + Fokus)" },
   "popup_feature_label_safe_send": { "message": "Mit Cmd/Ctrl + Eingabetaste senden" },
+  "popup_feature_label_preserve_scroll_on_send": {
+    "message": "Scroll-Position beim Senden beibehalten"
+  },
   "popup_feature_label_other_shortcuts": { "message": "Weitere Kurzbefehle" },
   "popup_helper_shortcuts_empty": {
     "message": "Aktiviere eine Funktion, um ihre Kurzbefehle anzupassen."

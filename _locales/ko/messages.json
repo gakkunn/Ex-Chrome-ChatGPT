@@ -16,6 +16,7 @@
   "popup_feature_label_vim_scroll": { "message": "Vim 스타일 스크롤" },
   "popup_feature_label_wide_screen": { "message": "와이드 화면(클린 UI + 포커스)" },
   "popup_feature_label_safe_send": { "message": "Cmd/Ctrl + Enter 로 보내기" },
+  "popup_feature_label_preserve_scroll_on_send": { "message": "전송 시 스크롤 위치 유지" },
   "popup_feature_label_other_shortcuts": { "message": "기타 단축키" },
   "popup_helper_shortcuts_empty": {
     "message": "기능을 켜면 해당 단축키를 사용자 지정할 수 있습니다."

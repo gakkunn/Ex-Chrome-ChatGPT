@@ -16,6 +16,9 @@
   "popup_feature_label_vim_scroll": { "message": "Rolagem estilo Vim" },
   "popup_feature_label_wide_screen": { "message": "Tela ampla (UI limpa + foco)" },
   "popup_feature_label_safe_send": { "message": "Enviar com Cmd/Ctrl + Enter" },
+  "popup_feature_label_preserve_scroll_on_send": {
+    "message": "Manter posição de rolagem ao enviar"
+  },
   "popup_feature_label_other_shortcuts": { "message": "Outros atalhos" },
   "popup_helper_shortcuts_empty": {
     "message": "Ative um recurso para personalizar os atalhos correspondentes."

@@ -16,6 +16,7 @@
   "popup_feature_label_vim_scroll": { "message": "Vim 風格捲動" },
   "popup_feature_label_wide_screen": { "message": "寬螢幕（乾淨介面 + 聚焦）" },
   "popup_feature_label_safe_send": { "message": "使用 Cmd/Ctrl + Enter 傳送" },
+  "popup_feature_label_preserve_scroll_on_send": { "message": "傳送時保持捲動位置" },
   "popup_feature_label_other_shortcuts": { "message": "其他快捷鍵" },
   "popup_helper_shortcuts_empty": {
     "message": "啟用任一功能即可自訂其快捷鍵。"

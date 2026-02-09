@@ -16,6 +16,7 @@
   "popup_feature_label_vim_scroll": { "message": "Vim 风格滚动" },
   "popup_feature_label_wide_screen": { "message": "宽屏（干净界面 + 聚焦）" },
   "popup_feature_label_safe_send": { "message": "使用 Cmd/Ctrl + Enter 发送" },
+  "popup_feature_label_preserve_scroll_on_send": { "message": "发送时保持滚动位置" },
   "popup_feature_label_other_shortcuts": { "message": "其他快捷键" },
   "popup_helper_shortcuts_empty": {
     "message": "启用某个功能即可自定义其快捷键。"

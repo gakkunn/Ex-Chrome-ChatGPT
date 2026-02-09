@@ -114,6 +114,23 @@ h1 {
   height: 16px;
 }
 
+.toggle-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toggle-badge {
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #fcd34d;
+  color: #0f172a;
+  line-height: 1.4;
+}
+
 .shortcut-message {
   min-height: 18px;
   font-size: 12px;

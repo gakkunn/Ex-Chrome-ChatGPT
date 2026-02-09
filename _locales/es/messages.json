@@ -16,6 +16,9 @@
   "popup_feature_label_vim_scroll": { "message": "Desplazamiento estilo Vim" },
   "popup_feature_label_wide_screen": { "message": "Pantalla ancha (UI limpia + enfoque)" },
   "popup_feature_label_safe_send": { "message": "Enviar con Cmd/Ctrl + Enter" },
+  "popup_feature_label_preserve_scroll_on_send": {
+    "message": "Mantener la posición de desplazamiento al enviar"
+  },
   "popup_feature_label_other_shortcuts": { "message": "Otros atajos" },
   "popup_helper_shortcuts_empty": {
     "message": "Activa una función para personalizar sus atajos."

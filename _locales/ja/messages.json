@@ -16,6 +16,7 @@
   "popup_feature_label_vim_scroll": { "message": "Vim 風スクロール" },
   "popup_feature_label_wide_screen": { "message": "ワイド画面（クリーン UI + フォーカス）" },
   "popup_feature_label_safe_send": { "message": "Cmd/Ctrl + Enter で送信" },
+  "popup_feature_label_preserve_scroll_on_send": { "message": "送信時にスクロール位置を維持" },
   "popup_feature_label_other_shortcuts": { "message": "その他のショートカット" },
   "popup_helper_shortcuts_empty": {
     "message": "機能を有効にすると、そのショートカットをカスタマイズできます。"

@@ -16,6 +16,9 @@
   "popup_feature_label_vim_scroll": { "message": "Défilement façon Vim" },
   "popup_feature_label_wide_screen": { "message": "Grand écran (UI épurée + focus)" },
   "popup_feature_label_safe_send": { "message": "Envoyer avec Cmd/Ctrl + Entrée" },
+  "popup_feature_label_preserve_scroll_on_send": {
+    "message": "Conserver la position de défilement à l’envoi"
+  },
   "popup_feature_label_other_shortcuts": { "message": "Autres raccourcis" },
   "popup_helper_shortcuts_empty": {
     "message": "Activez une fonctionnalité pour personnaliser ses raccourcis."

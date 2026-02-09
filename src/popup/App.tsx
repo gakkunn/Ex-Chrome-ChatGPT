@@ -44,10 +44,17 @@ const FEATURE_LABEL_KEYS: Record<FeatureCategory, MessageKey> = {
   vimScroll: 'popup_feature_label_vim_scroll',
   wideScreen: 'popup_feature_label_wide_screen',
   safeSend: 'popup_feature_label_safe_send',
+  preserveScrollOnSend: 'popup_feature_label_preserve_scroll_on_send',
   otherShortcuts: 'popup_feature_label_other_shortcuts',
 };
 
-const featureOrder: FeatureCategory[] = ['vimScroll', 'wideScreen', 'safeSend', 'otherShortcuts'];
+const featureOrder: FeatureCategory[] = [
+  'preserveScrollOnSend',
+  'vimScroll',
+  'wideScreen',
+  'safeSend',
+  'otherShortcuts',
+];
 
 const formatBinding = (binding: KeyBinding) => formatBindingString(binding);
 
@@ -457,7 +464,10 @@ export function App() {
                     checked={!!settings.featureToggles[category]}
                     onChange={(event) => handleToggleChange(category, event.currentTarget.checked)}
                   />
-                  <span>{getMessage(FEATURE_LABEL_KEYS[category])}</span>
+                  <span class="toggle-label">
+                    {getMessage(FEATURE_LABEL_KEYS[category])}
+                    {category === 'preserveScrollOnSend' && <span class="toggle-badge">new</span>}
+                  </span>
                 </label>
               ))}
             </div>

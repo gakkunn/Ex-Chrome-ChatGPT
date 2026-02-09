@@ -13,6 +13,7 @@ const FALLBACK_MESSAGES = {
   popup_feature_label_vim_scroll: 'Vim-like Scroll',
   popup_feature_label_wide_screen: 'Wide Screen (Clean UI + Focus)',
   popup_feature_label_safe_send: 'Send with Cmd/Ctrl + Enter',
+  popup_feature_label_preserve_scroll_on_send: 'Keep Scroll Position On Send',
   popup_feature_label_other_shortcuts: 'Other Shortcuts',
   popup_helper_shortcuts_empty: 'Enable a feature to customize its shortcuts.',
   popup_placeholder_shortcut: 'Press keys',
