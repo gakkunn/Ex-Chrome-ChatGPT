@@ -834,7 +834,10 @@ export class ShortcutsManager {
       }
     };
 
-    const cancel = () => cleanup();
+    const cancel = () => {
+      if (!restored) return;
+      cleanup();
+    };
 
     if (mode === 'focusAfterHidden') {
       window.addEventListener('focus', onFocus);
