@@ -179,8 +179,7 @@ button.cursor-pointer.absolute.z-30.rounded-full.border.w-8.h-8[class*='bottom-[
   display: none !important;
 }
 
-/* Hide scroll-to-bottom button in wide mode */
-html[data-chatgpt-unified-wide='true']
-  button.cursor-pointer.absolute.z-30.rounded-full.w-8.h-8[class*='bottom-[calc(100%+6*var(--spacing))'] {
+/* Hide scroll-to-bottom button */
+button.cursor-pointer.absolute.z-30.rounded-full.w-8.h-8[class~='end-1/2'][class~='translate-x-1/2'][class~='print:hidden'] {
   display: none !important;
 }
