@@ -18,12 +18,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "preact": "^10.25.1"
+    "preact": "^10.29.1"
   },
   "devDependencies": {
-    "@crxjs/vite-plugin": "^2.2.1",
     "@eslint/js": "^9.39.1",
-    "@preact/preset-vite": "^2.10.2",
+    "@preact/preset-vite": "^2.10.5",
     "@types/chrome": "^0.0.260",
     "@types/node": "^22.9.0",
     "@typescript-eslint/eslint-plugin": "^8.47.0",
@@ -36,9 +35,10 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
     "prettier": "^3.6.2",
+    "rollup": "^4.60.1",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.47.0",
-    "vite": "^7.2.6"
+    "vite": "^7.3.2"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

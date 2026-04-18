@@ -1,6 +1,4 @@
-import { defineManifest } from '@crxjs/vite-plugin';
-
-export default defineManifest({
+const manifest: chrome.runtime.ManifestV3 = {
   manifest_version: 3,
   default_locale: 'en',
   name: '__MSG_app_name_full__',
@@ -54,4 +52,6 @@ export default defineManifest({
       resources: ['src/inject/index.ts'],
     },
   ],
-});
+};
+
+export default manifest;
