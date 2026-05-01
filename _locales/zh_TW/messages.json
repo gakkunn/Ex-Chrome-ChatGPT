@@ -51,6 +51,7 @@
   "shortcut_label_mode_auto": { "message": "切換為 Auto 模式" },
   "shortcut_label_mode_instant": { "message": "切換為 Instant 模式" },
   "shortcut_label_mode_thinking": { "message": "切換為 Thinking 模式" },
+  "shortcut_label_mode_pro": { "message": "切換為 Pro 模式" },
   "shortcut_label_temporary_chat": { "message": "開啟臨時對話" },
   "shortcut_label_pin_chat": { "message": "釘選/取消釘選聊天" },
   "shortcut_label_branch_chat": { "message": "分支聊天" },

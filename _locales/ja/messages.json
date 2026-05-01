@@ -51,6 +51,7 @@
   "shortcut_label_mode_auto": { "message": "モードを Auto に設定" },
   "shortcut_label_mode_instant": { "message": "モードを Instant に設定" },
   "shortcut_label_mode_thinking": { "message": "モードを Thinking に設定" },
+  "shortcut_label_mode_pro": { "message": "モードを Pro に設定" },
   "shortcut_label_temporary_chat": { "message": "一時チャットを開く" },
   "shortcut_label_pin_chat": { "message": "チャットをピン留め/ピン留め解除" },
   "shortcut_label_branch_chat": { "message": "チャットを分岐" },

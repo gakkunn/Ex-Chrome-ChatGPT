@@ -36,6 +36,7 @@ const FALLBACK_MESSAGES = {
   shortcut_label_mode_auto: 'Set Mode: Auto',
   shortcut_label_mode_instant: 'Set Mode: Instant',
   shortcut_label_mode_thinking: 'Set Mode: Thinking',
+  shortcut_label_mode_pro: 'Set Mode: Pro',
   shortcut_label_temporary_chat: 'Open Temporary Chat',
   shortcut_label_pin_chat: 'Pin/Unpin Chat',
   shortcut_label_branch_chat: 'Branch Chat',

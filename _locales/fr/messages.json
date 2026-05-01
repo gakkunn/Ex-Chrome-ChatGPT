@@ -53,6 +53,7 @@
   "shortcut_label_mode_auto": { "message": "Passer en mode Auto" },
   "shortcut_label_mode_instant": { "message": "Passer en mode Instant" },
   "shortcut_label_mode_thinking": { "message": "Passer en mode Thinking" },
+  "shortcut_label_mode_pro": { "message": "Passer en mode Pro" },
   "shortcut_label_temporary_chat": { "message": "Ouvrir un chat temporaire" },
   "shortcut_label_pin_chat": { "message": "Épingler/Désépingler le chat" },
   "shortcut_label_branch_chat": { "message": "Dériver le chat" },

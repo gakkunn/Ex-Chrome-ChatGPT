@@ -53,6 +53,7 @@
   "shortcut_label_mode_auto": { "message": "Cambiar a modo Auto" },
   "shortcut_label_mode_instant": { "message": "Cambiar a modo Instant" },
   "shortcut_label_mode_thinking": { "message": "Cambiar a modo Thinking" },
+  "shortcut_label_mode_pro": { "message": "Cambiar a modo Pro" },
   "shortcut_label_temporary_chat": { "message": "Abrir chat temporal" },
   "shortcut_label_pin_chat": { "message": "Fijar/Desfijar chat" },
   "shortcut_label_branch_chat": { "message": "Bifurcar chat" },

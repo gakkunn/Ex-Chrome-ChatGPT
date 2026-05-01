@@ -143,6 +143,10 @@
     "message": "Set Mode: Thinking",
     "description": "Shortcut label."
   },
+  "shortcut_label_mode_pro": {
+    "message": "Set Mode: Pro",
+    "description": "Shortcut label."
+  },
   "shortcut_label_temporary_chat": {
     "message": "Open Temporary Chat",
     "description": "Shortcut label."

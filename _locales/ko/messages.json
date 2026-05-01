@@ -51,6 +51,7 @@
   "shortcut_label_mode_auto": { "message": "Auto 모드로 설정" },
   "shortcut_label_mode_instant": { "message": "Instant 모드로 설정" },
   "shortcut_label_mode_thinking": { "message": "Thinking 모드로 설정" },
+  "shortcut_label_mode_pro": { "message": "Pro 모드로 설정" },
   "shortcut_label_temporary_chat": { "message": "임시 대화 열기" },
   "shortcut_label_pin_chat": { "message": "채팅 고정/고정 해제" },
   "shortcut_label_branch_chat": { "message": "채팅 분기" },

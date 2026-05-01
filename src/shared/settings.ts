@@ -16,9 +16,9 @@ export type ShortcutId =
   | 'scrollHalfDown'
   | 'toggleFocus'
   | 'toggleModel'
-  | 'modeAuto'
   | 'modeInstant'
   | 'modeThinking'
+  | 'modePro'
   | 'temporaryChat'
   | 'togglePinChat'
   | 'branchChat'
@@ -62,14 +62,26 @@ export const DEFAULT_FEATURE_TOGGLES: FeatureToggles = {
   otherShortcuts: true,
 };
 
-const isMacPlatform =
-  typeof navigator !== 'undefined' && !!navigator.platform
-    ? navigator.platform.toLowerCase().includes('mac')
-    : false;
+const MODE_INSTANT_DEFAULT_BINDING: KeyBinding = {
+  key: '7',
+  code: 'Digit7',
+  mod: true,
+  shift: true,
+};
 
-const MODE_INSTANT_DEFAULT_BINDING: KeyBinding = isMacPlatform
-  ? { key: '0', code: 'Digit0', mod: true, shift: true }
-  : { key: '7', code: 'Digit7', mod: true, shift: true };
+const MODE_THINKING_DEFAULT_BINDING: KeyBinding = {
+  key: '8',
+  code: 'Digit8',
+  mod: true,
+  shift: true,
+};
+
+const MODE_PRO_DEFAULT_BINDING: KeyBinding = {
+  key: '9',
+  code: 'Digit9',
+  mod: true,
+  shift: true,
+};
 
 export const SHORTCUT_DEFINITIONS: ShortcutDefinition[] = [
   {
@@ -121,12 +133,6 @@ export const SHORTCUT_DEFINITIONS: ShortcutDefinition[] = [
     defaultBindings: [{ key: 'ArrowDown', code: 'ArrowDown', mod: true, shift: true }],
   },
   {
-    id: 'modeAuto',
-    labelKey: 'shortcut_label_mode_auto',
-    category: 'otherShortcuts',
-    defaultBindings: [{ key: '8', code: 'Digit8', mod: true, shift: true }],
-  },
-  {
     id: 'modeInstant',
     labelKey: 'shortcut_label_mode_instant',
     category: 'otherShortcuts',
@@ -136,7 +142,13 @@ export const SHORTCUT_DEFINITIONS: ShortcutDefinition[] = [
     id: 'modeThinking',
     labelKey: 'shortcut_label_mode_thinking',
     category: 'otherShortcuts',
-    defaultBindings: [{ key: '9', code: 'Digit9', mod: true, shift: true }],
+    defaultBindings: [MODE_THINKING_DEFAULT_BINDING],
+  },
+  {
+    id: 'modePro',
+    labelKey: 'shortcut_label_mode_pro',
+    category: 'otherShortcuts',
+    defaultBindings: [MODE_PRO_DEFAULT_BINDING],
   },
   {
     id: 'temporaryChat',
