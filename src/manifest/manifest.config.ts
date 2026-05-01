@@ -3,7 +3,7 @@ const manifest: chrome.runtime.ManifestV3 = {
   default_locale: 'en',
   name: '__MSG_app_name_full__',
   description: '__MSG_app_description__',
-  version: '1.3.0',
+  version: '1.4.0',
   icons: {
     '16': 'icons/icon16.png',
     '32': 'icons/icon32.png',

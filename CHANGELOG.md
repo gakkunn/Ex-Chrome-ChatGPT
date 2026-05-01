@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+## 1.4.0 - 2026-05-01
+### Features
+- Replace the Auto mode shortcut with Pro mode and standardize model shortcuts to Instant, Thinking, and Pro.
+- Add support for the updated ChatGPT model selector, including the newer Intelligence dialog flow.
+- Support the modern ChatGPT keyboard shortcuts panel when injecting extension shortcuts.
+
+### Fixes
+- Harden model switching, Temporary Chat, Branch Chat, and Copy Last User Message shortcuts against recent ChatGPT UI changes.
+- Prevent premature scroll-restore cancellation after branching a chat.
+- Hide the scroll-to-bottom button more consistently.
+
+### Build
+- Replace the CRX Vite plugin with custom manifest packaging.
+- Bundle the content script and wire `content.css` directly through the extension manifest.
+
+### Documentation
+- Update README shortcut examples for the Instant, Thinking, and Pro model shortcuts.
+
 ## 1.3.0 - 2026-02-09
 ### Features
 - Add keep-scroll-on-send behavior and expose its toggle in the popup
