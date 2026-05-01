@@ -16,7 +16,7 @@ import {
 import { waitFor, humanClick, showNotification, getInputField } from './utils';
 
 type ScrollType = 'top' | 'bottom' | 'up' | 'down' | 'halfUp' | 'halfDown';
-type ModeName = 'auto' | 'instant' | 'thinking';
+type ModeName = 'instant' | 'thinking' | 'pro';
 type ScrollSnapshotEntry = {
   container: Element;
   scrollTop: number;
@@ -141,22 +141,23 @@ export class ShortcutsManager {
 
   private normalizeModeName(modeName: string): ModeName | null {
     const normalized = modeName.trim().toLowerCase();
-    if (normalized === 'auto' || normalized === 'instant' || normalized === 'thinking') {
+    if (normalized === 'instant' || normalized === 'thinking' || normalized === 'pro') {
       return normalized;
     }
     return null;
   }
 
   private getOpenMenuRoot(): HTMLElement | null {
-    const menus = Array.from(
+    const menus = this.getOpenMenuRoots();
+    return menus[menus.length - 1] || null;
+  }
+
+  private getOpenMenuRoots(): HTMLElement[] {
+    return Array.from(
       document.querySelectorAll<HTMLElement>(
         '[data-radix-menu-content][data-state="open"], [role="menu"][data-state="open"]'
       )
     );
-    if (menus.length) {
-      return menus[menus.length - 1];
-    }
-    return null;
   }
 
   private waitForMenuClosed(menu: HTMLElement, timeout = 15000): Promise<boolean> {
@@ -212,51 +213,111 @@ export class ShortcutsManager {
   }
 
   private itemTextMatchesMode(item: HTMLElement, mode: ModeName): boolean {
-    const text = item.textContent?.toLowerCase() ?? '';
-    return text.includes(mode);
+    const text = this.normalizeMenuLabel(
+      `${item.getAttribute('aria-label') || ''} ${item.textContent || ''}`
+    );
+    return new RegExp(`(^|\\b)${mode}(\\b|$)`).test(text);
+  }
+
+  private isModelSwitcherItem(item: HTMLElement): boolean {
+    const testId = item.getAttribute('data-testid') ?? '';
+    return testId.startsWith('model-switcher-') && !testId.startsWith('model-switcher-dropdown');
+  }
+
+  private itemTestIdMatchesMode(item: HTMLElement, mode: ModeName): boolean {
+    const testId = item.getAttribute('data-testid') ?? '';
+    if (!this.isModelSwitcherItem(item)) return false;
+    if (mode === 'thinking') return /(?:^|-)thinking$/.test(testId);
+    if (mode === 'pro') return /(?:^|-)pro$/.test(testId);
+    return !/(?:^|-)(thinking|pro)$/.test(testId);
+  }
+
+  private isIntelligenceDialog(dialog: HTMLElement): boolean {
+    const title = this.normalizeMenuLabel(
+      Array.from(dialog.querySelectorAll('h1, h2, h3, [id]'))
+        .map((element) => element.textContent || '')
+        .join(' ')
+    );
+    const hasModelOptions =
+      !!dialog.querySelector('[role="radiogroup"][aria-label="Model options"]') ||
+      !!dialog.querySelector('#model-selection-label');
+
+    return hasModelOptions && title.includes('intelligence');
+  }
+
+  private getOpenModelRoots(): HTMLElement[] {
+    const roots = new Set<HTMLElement>();
+    this.getOpenMenuRoots().forEach((menu) => roots.add(menu));
+
+    document.querySelectorAll<HTMLElement>('[role="dialog"], dialog[open]').forEach((dialog) => {
+      if (
+        dialog.getAttribute('data-state') !== 'closed' &&
+        this.isVisibleElement(dialog) &&
+        this.isIntelligenceDialog(dialog)
+      ) {
+        roots.add(dialog);
+      }
+    });
+
+    return Array.from(roots);
+  }
+
+  private isDisabledElement(element: HTMLElement): boolean {
+    return (
+      (element instanceof HTMLButtonElement && element.disabled) ||
+      element.getAttribute('aria-disabled') === 'true' ||
+      element.hasAttribute('data-disabled')
+    );
+  }
+
+  private isVisibleElement(element: HTMLElement): boolean {
+    if (!element.isConnected) return false;
+    const style = getComputedStyle(element);
+    return (
+      style.display !== 'none' &&
+      style.visibility !== 'hidden' &&
+      element.getClientRects().length > 0
+    );
+  }
+
+  private isUsableElement(element: HTMLElement): boolean {
+    return this.isVisibleElement(element) && !this.isDisabledElement(element);
+  }
+
+  private findModeItemInRoot(root: HTMLElement, mode: ModeName): HTMLElement | null {
+    const items = Array.from(
+      root.querySelectorAll<HTMLElement>(
+        '[role="menuitem"], [role="menuitemradio"], [role="radio"]'
+      )
+    ).filter((item) => this.isUsableElement(item));
+    const modelItems = items.filter((item) => this.isModelSwitcherItem(item));
+    const byTestId = modelItems.find((item) => this.itemTestIdMatchesMode(item, mode));
+    if (byTestId) return byTestId;
+
+    const radioGroup = root.querySelector<HTMLElement>(
+      '[role="radiogroup"][aria-label="Model options"]'
+    );
+    const radioItems = radioGroup
+      ? Array.from(radioGroup.querySelectorAll<HTMLElement>('[role="radio"]')).filter((item) =>
+          this.isUsableElement(item)
+        )
+      : items.filter((item) => item.getAttribute('role') === 'radio');
+
+    return (
+      modelItems.find((item) => this.itemTextMatchesMode(item, mode)) ||
+      radioItems.find((item) => this.itemTextMatchesMode(item, mode)) ||
+      items.find((item) => this.itemTextMatchesMode(item, mode)) ||
+      null
+    );
   }
 
   private findModeMenuItem(mode: ModeName): HTMLElement | null {
-    const root = this.getOpenMenuRoot();
-    if (!root) return null;
-
-    const items = Array.from(root.querySelectorAll<HTMLElement>('[role="menuitem"]'));
-    const byText = items.find((item) => this.itemTextMatchesMode(item, mode));
-    if (byText) return byText;
-
-    const testIdItems = items.filter((item) => {
-      const testId = item.getAttribute('data-testid') ?? '';
-      return testId.startsWith('model-switcher-') && !testId.startsWith('model-switcher-dropdown');
-    });
-
-    const instantItem = testIdItems.find((item) => {
-      const testId = item.getAttribute('data-testid') ?? '';
-      return testId.endsWith('-instant');
-    });
-    const thinkingItem = testIdItems.find((item) => {
-      const testId = item.getAttribute('data-testid') ?? '';
-      return testId.endsWith('-thinking');
-    });
-
-    if (mode === 'instant') return instantItem || null;
-    if (mode === 'thinking') return thinkingItem || null;
-
-    const baseTestId =
-      instantItem?.getAttribute('data-testid')?.replace(/-instant$/, '') ||
-      thinkingItem?.getAttribute('data-testid')?.replace(/-thinking$/, '');
-    if (baseTestId) {
-      const baseItem = testIdItems.find(
-        (item) => (item.getAttribute('data-testid') ?? '') === baseTestId
-      );
-      if (baseItem) return baseItem;
+    const roots = this.getOpenModelRoots();
+    for (let index = roots.length - 1; index >= 0; index -= 1) {
+      const item = this.findModeItemInRoot(roots[index], mode);
+      if (item) return item;
     }
-
-    return (
-      testIdItems.find((item) => {
-        const testId = item.getAttribute('data-testid') ?? '';
-        return !testId.endsWith('-instant') && !testId.endsWith('-thinking');
-      }) || null
-    );
+    return null;
   }
 
   private async waitForModeMenuItem(mode: ModeName): Promise<HTMLElement | null> {
@@ -268,7 +329,7 @@ export class ShortcutsManager {
     }
   }
 
-  private async clickModeItem(modeName: string): Promise<void> {
+  private async clickModeItem(modeName: string, notifyOnMissing = true): Promise<boolean> {
     const mode = this.normalizeModeName(modeName);
     if (!mode) {
       throw new Error(getMessage('error_unknown_mode', [modeName]));
@@ -276,10 +337,13 @@ export class ShortcutsManager {
 
     const item = await this.waitForModeMenuItem(mode);
     if (!item) {
-      showNotification(getMessage('notification_mode_item_missing', [modeName]));
-      return;
+      if (notifyOnMissing) {
+        showNotification(getMessage('notification_mode_item_missing', [modeName]));
+      }
+      return false;
     }
     humanClick(item);
+    return true;
   }
 
   private async toggleModel() {
@@ -292,9 +356,7 @@ export class ShortcutsManager {
         return;
       }
 
-      const trigger = document.querySelector(
-        'button[data-testid="model-switcher-dropdown-button"]'
-      );
+      const trigger = this.findModelSelectorButton();
 
       if (!trigger) {
         showNotification(getMessage('notification_model_selector_missing'));
@@ -306,6 +368,77 @@ export class ShortcutsManager {
       this.clearScrollRestore();
       this.notifyError(error);
     }
+  }
+
+  private findModelSelectorButton(): HTMLElement | null {
+    return (
+      document.querySelector<HTMLElement>('button[data-testid="model-switcher-dropdown-button"]') ||
+      document.querySelector<HTMLElement>('button[aria-label="Model selector"]') ||
+      this.findComposerModelSelectorButton()
+    );
+  }
+
+  private findComposerModelSelectorButton(): HTMLElement | null {
+    const candidates = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        [
+          '#thread-bottom-container button.__composer-pill[aria-haspopup="menu"]',
+          '#thread-bottom-container [data-composer-surface="true"] button[aria-haspopup="menu"]',
+          'form[data-type="unified-composer"] button[aria-haspopup="menu"]',
+          'button.__composer-pill[aria-haspopup="menu"]',
+        ].join(', ')
+      )
+    );
+    const seen = new Set<HTMLElement>();
+
+    return (
+      candidates
+        .filter((candidate) => {
+          if (seen.has(candidate)) return false;
+          seen.add(candidate);
+          return true;
+        })
+        .find((candidate) => this.isLikelyComposerModelSelectorButton(candidate)) || null
+    );
+  }
+
+  private isLikelyComposerModelSelectorButton(button: HTMLElement): boolean {
+    if (!this.isUsableElement(button)) return false;
+
+    const testId = button.getAttribute('data-testid') || '';
+    if (testId === 'composer-plus-btn' || testId.includes('plus')) return false;
+
+    const label = this.normalizeMenuLabel(
+      `${button.getAttribute('aria-label') || ''} ${button.textContent || ''}`
+    );
+    if (
+      label.includes('add files') ||
+      label.includes('dictation') ||
+      label.includes('voice') ||
+      label.includes('search')
+    ) {
+      return false;
+    }
+
+    if (button.classList.contains('__composer-pill')) return true;
+
+    const isInComposer = !!button.closest(
+      '#thread-bottom-container, [data-composer-surface="true"], form[data-type="unified-composer"]'
+    );
+    return isInComposer && /\b(instant|thinking|pro|latest|extended|auto)\b/.test(label);
+  }
+
+  private findModelConfigureItem(): HTMLElement | null {
+    const root = this.getOpenMenuRoot();
+    if (!root) return null;
+
+    return (
+      root.querySelector<HTMLElement>('[data-testid="model-configure-modal"]') ||
+      Array.from(root.querySelectorAll<HTMLElement>('[role="menuitem"]')).find((item) =>
+        this.normalizeMenuLabel(item.textContent || '').includes('configure')
+      ) ||
+      null
+    );
   }
 
   private async openGptsTriggerMenu(): Promise<void> {
@@ -359,16 +492,28 @@ export class ShortcutsManager {
 
       await this.closeAllMenus();
 
-      const trigger = document.querySelector(
-        'header[id="page-header"] button[data-testid="model-switcher-dropdown-button"]'
-      );
+      const trigger = this.findModelSelectorButton();
 
       if (!trigger) {
         showNotification(getMessage('notification_model_selector_missing'));
         return;
       }
       humanClick(trigger);
-      await this.clickModeItem(modeName);
+      let selected = await this.clickModeItem(modeName, false);
+      if (!selected) {
+        const configureItem = await waitFor(() => this.findModelConfigureItem(), {
+          timeout: 1200,
+        }).catch(() => null);
+        if (configureItem) {
+          humanClick(configureItem);
+          selected = await this.clickModeItem(modeName, false);
+        }
+      }
+      if (!selected) {
+        showNotification(getMessage('notification_mode_item_missing', [modeName]));
+        return;
+      }
+
       setTimeout(() => {
         const input = getInputField();
         if (input) input.focus();
@@ -380,17 +525,100 @@ export class ShortcutsManager {
 
   private async openTemporaryChat() {
     try {
-      const tmpChatButton = document.querySelector(
-        '#conversation-header-actions > div > span[data-state] > button.no-draggable'
-      );
+      let tmpChatButton = this.findTemporaryChatButton();
+      if (tmpChatButton) {
+        if (!this.isTemporaryChatEnabledButton(tmpChatButton)) {
+          humanClick(tmpChatButton);
+        }
+        return;
+      }
+
+      const newChatButton = this.findNewChatButton();
+      if (!newChatButton) {
+        showNotification(getMessage('notification_temporary_chat_missing'));
+        return;
+      }
+
+      humanClick(newChatButton);
+      tmpChatButton = (await waitFor(() => this.findTemporaryChatButton(), {
+        timeout: 5000,
+      }).catch(() => null)) as HTMLElement | null;
       if (!tmpChatButton) {
         showNotification(getMessage('notification_temporary_chat_missing'));
         return;
       }
+      if (this.isTemporaryChatEnabledButton(tmpChatButton)) return;
       humanClick(tmpChatButton);
     } catch (error: unknown) {
       this.notifyError(error);
     }
+  }
+
+  private findTemporaryChatButton(): HTMLElement | null {
+    const candidates = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        [
+          'button[data-testid*="temporary" i]',
+          'button[aria-label*="temporary" i]',
+          '[role="menuitem"][data-testid*="temporary" i]',
+          '[role="menuitem"][aria-label*="temporary" i]',
+          '#conversation-header-actions > div > span[data-state] > button.no-draggable',
+        ].join(', ')
+      )
+    );
+    const temporaryCandidates = candidates.filter((candidate) =>
+      this.normalizeMenuLabel(
+        `${candidate.getAttribute('aria-label') || ''} ${candidate.textContent || ''}`
+      ).includes('temporary')
+    );
+
+    return (
+      temporaryCandidates.find(
+        (candidate) =>
+          !this.isTemporaryChatEnabledButton(candidate) && this.isUsableElement(candidate)
+      ) ||
+      temporaryCandidates.find((candidate) => this.isUsableElement(candidate)) ||
+      null
+    );
+  }
+
+  private isTemporaryChatEnabledButton(button: HTMLElement): boolean {
+    const label = this.normalizeMenuLabel(
+      `${button.getAttribute('aria-label') || ''} ${button.textContent || ''}`
+    );
+    return (
+      label.includes('turn off temporary') ||
+      label.includes('temporary chat is on') ||
+      button.getAttribute('aria-pressed') === 'true'
+    );
+  }
+
+  private findNewChatButton(): HTMLElement | null {
+    const candidates = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        [
+          '[data-testid="create-new-chat-button"]',
+          'a[href="/"][data-sidebar-item="true"]',
+          'a[href="/"]',
+          'button[aria-label*="new chat" i]',
+        ].join(', ')
+      )
+    );
+    const seen = new Set<HTMLElement>();
+
+    return (
+      candidates
+        .filter((candidate) => {
+          if (seen.has(candidate)) return false;
+          seen.add(candidate);
+          return this.isUsableElement(candidate);
+        })
+        .find((candidate) =>
+          this.normalizeMenuLabel(
+            `${candidate.getAttribute('aria-label') || ''} ${candidate.textContent || ''}`
+          ).includes('new chat')
+        ) || null
+    );
   }
 
   private findConversationMenuTrigger(): HTMLElement | null {
@@ -398,6 +626,8 @@ export class ShortcutsManager {
     if (!container) return null;
 
     const trigger =
+      container.querySelector<HTMLElement>('button[data-testid="conversation-options-button"]') ||
+      container.querySelector<HTMLElement>('button[aria-label="Open conversation options"]') ||
       container.querySelector<HTMLElement>('[aria-haspopup="menu"][data-state]') ||
       container.querySelector<HTMLElement>('button[aria-haspopup="menu"]');
     if (!trigger) return null;
@@ -469,21 +699,55 @@ export class ShortcutsManager {
     }
   }
 
+  private getConversationTurns(role: 'assistant' | 'user'): HTMLElement[] {
+    const candidates = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        [
+          `[data-testid^="conversation-turn-"][data-turn="${role}"]`,
+          `section[data-turn="${role}"]`,
+          `article[data-turn="${role}"]`,
+          `[data-message-author-role="${role}"]`,
+        ].join(', ')
+      )
+    );
+    const turns = new Set<HTMLElement>();
+
+    candidates.forEach((candidate) => {
+      const turn =
+        (candidate.matches(`[data-turn="${role}"]`) ? candidate : null) ||
+        candidate.closest<HTMLElement>(`[data-turn="${role}"]`) ||
+        candidate.closest<HTMLElement>('[data-testid^="conversation-turn-"]') ||
+        candidate.closest<HTMLElement>('article, section') ||
+        candidate;
+
+      if (turn.isConnected) {
+        turns.add(turn);
+      }
+    });
+
+    return Array.from(turns);
+  }
+
+  private getLastConversationTurn(role: 'assistant' | 'user'): HTMLElement | null {
+    const turns = this.getConversationTurns(role);
+    return turns[turns.length - 1] || null;
+  }
+
   private async branchChat(): Promise<void> {
     try {
       await this.closeAllMenus();
 
-      const lastAssistantTurn = document.querySelector(
-        'article[data-turn="assistant"]:last-of-type'
-      );
+      const lastAssistantTurn = this.getLastConversationTurn('assistant');
       if (!lastAssistantTurn) {
         showNotification(getMessage('notification_branch_chat_not_found'));
         return;
       }
 
-      const moreActionsBtn = lastAssistantTurn.querySelector(
-        'button[aria-label="More actions"]'
-      ) as HTMLElement | null;
+      const moreActionsBtn =
+        lastAssistantTurn.querySelector<HTMLElement>('button[aria-label="More actions"]') ||
+        lastAssistantTurn.querySelector<HTMLElement>('button[aria-label*="More" i]') ||
+        lastAssistantTurn.querySelector<HTMLElement>('button[data-testid*="more" i]') ||
+        lastAssistantTurn.querySelector<HTMLElement>('button[data-testid*="turn-actions" i]');
       if (!moreActionsBtn) {
         showNotification(getMessage('notification_branch_chat_not_found'));
         return;
@@ -494,7 +758,7 @@ export class ShortcutsManager {
 
       humanClick(moreActionsBtn, { scroll: false });
 
-      const branchItem = await waitFor('[role="menuitem"][aria-label="Branch in new chat"]', {
+      const branchItem = await waitFor(() => this.findMenuItemByLabel('branch'), {
         timeout: 2000,
       });
       humanClick(branchItem, { scroll: false });
@@ -505,10 +769,7 @@ export class ShortcutsManager {
 
   private copyLastUserMessage() {
     try {
-      const userTurns = Array.from(
-        document.querySelectorAll<HTMLElement>('article[data-turn="user"]')
-      );
-      const lastUserTurn = userTurns[userTurns.length - 1];
+      const lastUserTurn = this.getLastConversationTurn('user');
       if (!lastUserTurn) {
         showNotification(getMessage('notification_copy_last_user_message_missing'));
         return;
@@ -516,7 +777,9 @@ export class ShortcutsManager {
 
       const copyButton =
         lastUserTurn.querySelector<HTMLElement>('button[data-testid="copy-turn-action-button"]') ||
-        lastUserTurn.querySelector<HTMLElement>('button[aria-label="Copy"]');
+        lastUserTurn.querySelector<HTMLElement>('button[data-testid*="copy" i]') ||
+        lastUserTurn.querySelector<HTMLElement>('button[aria-label="Copy"]') ||
+        lastUserTurn.querySelector<HTMLElement>('button[aria-label*="Copy" i]');
       if (!copyButton) {
         showNotification(getMessage('notification_copy_last_user_message_missing'));
         return;
@@ -527,6 +790,20 @@ export class ShortcutsManager {
     } catch (error: unknown) {
       this.notifyError(error);
     }
+  }
+
+  private findMenuItemByLabel(labelPart: string): HTMLElement | null {
+    const normalizedNeedle = this.normalizeMenuLabel(labelPart);
+    const items = Array.from(
+      document.querySelectorAll<HTMLElement>('[role="menuitem"], [role="menuitemradio"]')
+    );
+    return (
+      items.find((item) =>
+        this.normalizeMenuLabel(
+          `${item.getAttribute('aria-label') || ''} ${item.textContent || ''}`
+        ).includes(normalizedNeedle)
+      ) || null
+    );
   }
 
   private startContinuousScroll(container: Element, direction: 'up' | 'down') {
@@ -996,12 +1273,6 @@ export class ShortcutsManager {
       return;
     }
 
-    if (this.matchesShortcut('modeAuto', e)) {
-      e.preventDefault();
-      this.selectMode('Auto');
-      return;
-    }
-
     if (this.matchesShortcut('modeInstant', e)) {
       e.preventDefault();
       this.selectMode('Instant');
@@ -1011,6 +1282,12 @@ export class ShortcutsManager {
     if (this.matchesShortcut('modeThinking', e)) {
       e.preventDefault();
       this.selectMode('Thinking');
+      return;
+    }
+
+    if (this.matchesShortcut('modePro', e)) {
+      e.preventDefault();
+      this.selectMode('Pro');
       return;
     }
 
@@ -1052,12 +1329,25 @@ export class ShortcutsManager {
   }
 
   private findShortcutPanel(): HTMLElement | null {
+    const shortcutDialog = document.querySelector<HTMLElement>(
+      '[data-testid="keyboard-shortcuts-dialog"]'
+    );
+    if (shortcutDialog && this.isShortcutPanelCandidate(shortcutDialog)) {
+      return shortcutDialog;
+    }
+
+    const nativeDialogs = Array.from(document.querySelectorAll<HTMLElement>('dialog'));
+    for (let i = nativeDialogs.length - 1; i >= 0; i -= 1) {
+      const dialog = nativeDialogs[i];
+      if (this.isShortcutPanelCandidate(dialog)) {
+        return dialog;
+      }
+    }
+
     const dialogs = Array.from(document.querySelectorAll<HTMLElement>('[role="dialog"]'));
     for (let i = dialogs.length - 1; i >= 0; i -= 1) {
       const dialog = dialogs[i];
-      const hasShortcutList = !!dialog.querySelector('dl');
-      const hasKeyHints = !!dialog.querySelector('kbd');
-      if (hasShortcutList && hasKeyHints) {
+      if (this.isShortcutPanelCandidate(dialog)) {
         return dialog;
       }
     }
@@ -1067,15 +1357,32 @@ export class ShortcutsManager {
     );
     for (let i = popovers.length - 1; i >= 0; i -= 1) {
       const popover = popovers[i];
-      const hasShortcutList = !!popover.querySelector('dl');
-      const hasKeyHints = !!popover.querySelector('kbd');
-      if (hasShortcutList && hasKeyHints) {
-        const dialog = popover.closest('[role="dialog"]') as HTMLElement | null;
+      if (this.isShortcutPanelCandidate(popover)) {
+        const dialog =
+          (popover.closest('[data-testid="keyboard-shortcuts-dialog"]') as HTMLElement | null) ||
+          (popover.closest('[role="dialog"]') as HTMLElement | null) ||
+          (popover.closest('dialog') as HTMLElement | null);
         return dialog || popover;
       }
     }
 
     return null;
+  }
+
+  private isShortcutPanelCandidate(element: HTMLElement): boolean {
+    const hasExplicitRoot =
+      element.matches('[data-testid="keyboard-shortcuts-dialog"]') ||
+      !!element.querySelector('[data-testid="keyboard-shortcuts-dialog"]');
+    const hasHeading = Array.from(element.querySelectorAll('h1, h2, h3')).some(
+      (heading) => this.normalizeMenuLabel(heading.textContent || '') === 'keyboard shortcuts'
+    );
+    const hasKeyHints = !!element.querySelector('kbd');
+    const hasLegacyList = !!element.querySelector('dl');
+    const hasModernList =
+      !!element.querySelector('section ul li label') ||
+      !!element.querySelector('input[name="keyboard-shortcut-capture"]');
+
+    return hasKeyHints && (hasExplicitRoot || hasHeading) && (hasLegacyList || hasModernList);
   }
 
   private refreshShortcutPanel() {
@@ -1086,9 +1393,8 @@ export class ShortcutsManager {
   }
 
   private decorateShortcutPanel(panel: HTMLElement) {
-    const root = (panel.closest('[role="dialog"]') as HTMLElement | null) || panel;
-    const list = root.querySelector('dl') as HTMLElement | null;
-    const scrollHost = list || root;
+    const root = this.resolveShortcutPanelRoot(panel);
+    const scrollHost = this.findShortcutPanelScrollHost(root);
 
     scrollHost.style.maxHeight = '70vh';
     scrollHost.style.overflowY = 'auto';
@@ -1098,14 +1404,36 @@ export class ShortcutsManager {
 
     if (!scrollHost.dataset.customScrollBound) {
       const stop = (ev: Event) => ev.stopPropagation();
-      ['mousedown', 'pointerdown', 'click', 'wheel'].forEach((evt) =>
-        scrollHost.addEventListener(evt, stop, { passive: evt === 'wheel' })
-      );
+      scrollHost.addEventListener('wheel', stop, { passive: true });
+      scrollHost.addEventListener('touchmove', stop, { passive: true });
       scrollHost.dataset.customScrollBound = 'true';
     }
 
-    this.addCustomShortcutsToMenu(root);
+    const modernPanelPatched = this.addCustomShortcutsToModernPanel(root);
+    if (!modernPanelPatched) {
+      this.addCustomShortcutsToMenu(root);
+    }
     root.dataset.customShortcutsInjected = 'true';
+  }
+
+  private resolveShortcutPanelRoot(panel: HTMLElement): HTMLElement {
+    if (panel.matches('[data-testid="keyboard-shortcuts-dialog"]')) return panel;
+
+    return (
+      (panel.querySelector('[data-testid="keyboard-shortcuts-dialog"]') as HTMLElement | null) ||
+      (panel.closest('[data-testid="keyboard-shortcuts-dialog"]') as HTMLElement | null) ||
+      (panel.closest('[role="dialog"]') as HTMLElement | null) ||
+      (panel.closest('dialog') as HTMLElement | null) ||
+      panel
+    );
+  }
+
+  private findShortcutPanelScrollHost(root: HTMLElement): HTMLElement {
+    return (
+      root.querySelector<HTMLElement>('.overflow-y-auto') ||
+      root.querySelector<HTMLElement>('dl') ||
+      root
+    );
   }
 
   private bindingToTokens(binding: KeyBinding): string[] {
@@ -1141,6 +1469,149 @@ export class ShortcutsManager {
     const value = this.settings.shortcuts[def.id];
     if (Array.isArray(value) && value.length) return value;
     return def.defaultBindings;
+  }
+
+  private createSettingsLink(): HTMLElement {
+    const settingsLink = document.createElement('a');
+    settingsLink.href = '#';
+    settingsLink.textContent = getMessage('shortcut_panel_settings_link_text');
+    settingsLink.style.color = 'inherit';
+    settingsLink.style.textDecoration = 'underline';
+
+    settingsLink.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      chrome.runtime.sendMessage({ action: 'openSettings' });
+    });
+
+    return settingsLink;
+  }
+
+  private createBindingsContainer(bindings: KeyBinding[]): HTMLElement {
+    const container = document.createElement('div');
+    container.className = 'flex shrink-0 items-center gap-1';
+
+    bindings.forEach((binding, index) => {
+      if (index > 0) {
+        const sep = document.createElement('span');
+        sep.className = 'mx-1';
+        sep.textContent = '/';
+        container.appendChild(sep);
+      }
+      container.appendChild(this.createKbdGroup(this.bindingToTokens(binding)));
+    });
+
+    return container;
+  }
+
+  private getModernShortcutSections(root: HTMLElement): HTMLElement[] {
+    return Array.from(root.querySelectorAll<HTMLElement>('section')).filter(
+      (section) => !!section.querySelector('h3') && !!section.querySelector('ul')
+    );
+  }
+
+  private getModernShortcutItemClass(index: number, total: number): string {
+    const base = 'bg-token-bg-secondary squircle scroll-mt-12 scroll-mb-24';
+    if (total <= 1) return `${base} rounded-[28px]`;
+    if (index === 0) return `${base} rounded-t-[28px] rounded-b-[4px]`;
+    if (index === total - 1) return `${base} rounded-t-[4px] rounded-b-[28px]`;
+    return `${base} rounded-[4px]`;
+  }
+
+  private createModernShortcutRow(
+    label: string,
+    trailing: HTMLElement,
+    index: number,
+    total: number
+  ): HTMLElement {
+    const row = document.createElement('li');
+    row.className = this.getModernShortcutItemClass(index, total);
+    row.dataset.customShortcut = 'true';
+
+    const content = document.createElement('div');
+    content.className = 'flex min-h-[53px] items-center gap-2 py-2.5 ps-4 pe-3';
+
+    const switchPlaceholder = document.createElement('span');
+    switchPlaceholder.className =
+      'relative box-content aspect-7/4 shrink-0 rounded-full p-[2px] h-4';
+    switchPlaceholder.style.visibility = 'hidden';
+    switchPlaceholder.setAttribute('aria-hidden', 'true');
+
+    const labelEl = document.createElement('span');
+    labelEl.className =
+      'text-token-text-primary min-w-0 flex-1 truncate text-base leading-6 font-normal tracking-[0.01em]';
+    labelEl.textContent = label;
+
+    const trailingWrapper = document.createElement('div');
+    trailingWrapper.className = 'flex shrink-0 items-center gap-1 text-token-text-secondary';
+    trailingWrapper.appendChild(trailing);
+
+    content.appendChild(switchPlaceholder);
+    content.appendChild(labelEl);
+    content.appendChild(trailingWrapper);
+    row.appendChild(content);
+
+    return row;
+  }
+
+  private addCustomShortcutsToModernPanel(root: HTMLElement): boolean {
+    root.querySelectorAll('[data-custom-shortcut="true"]').forEach((el) => el.remove());
+
+    const sections = this.getModernShortcutSections(root);
+    const referenceSection = sections[sections.length - 1];
+    if (!referenceSection) return false;
+
+    const referenceHeading = referenceSection.querySelector('h3');
+    const referenceHeadingSpan = referenceHeading?.querySelector('span');
+    const referenceList = referenceSection.querySelector('ul');
+
+    const section = document.createElement('section');
+    section.className = referenceSection.className || 'flex flex-col gap-0.5';
+    section.dataset.customShortcut = 'true';
+
+    const headingId = 'chatgpt-unified-extension-shortcuts-heading';
+    const heading = document.createElement('h3');
+    heading.id = headingId;
+    heading.className =
+      referenceHeading?.className ||
+      'text-token-text-secondary bg-token-bg-primary sticky top-0 z-10 scroll-mt-12 text-sm leading-6 font-semibold tracking-[0.01em]';
+    heading.dataset.customShortcut = 'true';
+
+    const headingSpan = document.createElement('span');
+    headingSpan.className =
+      referenceHeadingSpan?.className || 'stuck-border block border-b py-0.5 ps-6 pe-3';
+    headingSpan.textContent = getMessage('shortcut_panel_extension_heading');
+    heading.appendChild(headingSpan);
+
+    const list = document.createElement('ul');
+    list.className = referenceList?.className || 'flex list-none flex-col gap-0.5 px-3 py-0';
+    list.setAttribute('aria-labelledby', headingId);
+
+    const rows: { label: string; trailing: HTMLElement }[] = [
+      {
+        label: getMessage('shortcut_panel_settings_label'),
+        trailing: this.createSettingsLink(),
+      },
+    ];
+
+    SHORTCUT_DEFINITIONS.filter((def) => this.isEnabled(def.category)).forEach((def) => {
+      const bindings = this.getDisplayBindings(def);
+      if (!bindings.length) return;
+      rows.push({
+        label: getMessage(def.labelKey),
+        trailing: this.createBindingsContainer(bindings),
+      });
+    });
+
+    rows.forEach((row, index) => {
+      list.appendChild(this.createModernShortcutRow(row.label, row.trailing, index, rows.length));
+    });
+
+    section.appendChild(heading);
+    section.appendChild(list);
+    referenceSection.after(section);
+
+    return true;
   }
 
   private addCustomShortcutsToMenu(menuContainer: Element) {

@@ -25,8 +25,35 @@ export function waitFor(
 }
 
 export function getInputField(): HTMLElement | null {
-  return (document.querySelector('div.ProseMirror[contenteditable="true"]') ||
-    document.querySelector('[contenteditable="true"]')) as HTMLElement | null;
+  const selectors = [
+    '#thread-bottom-container div#prompt-textarea[contenteditable="true"]',
+    '#thread-bottom-container div.ProseMirror[contenteditable="true"]',
+    '#thread-bottom-container [role="textbox"][contenteditable="true"]',
+    'div#prompt-textarea[contenteditable="true"]',
+    'div.ProseMirror[contenteditable="true"]',
+    '[role="textbox"][contenteditable="true"]',
+    'textarea[name="prompt-textarea"]',
+    '[contenteditable="true"]',
+  ];
+  const seen = new Set<Element>();
+  const candidates = selectors
+    .flatMap((selector) => Array.from(document.querySelectorAll<HTMLElement>(selector)))
+    .filter((element) => {
+      if (seen.has(element)) return false;
+      seen.add(element);
+      return true;
+    });
+
+  return (
+    candidates.find((element) => {
+      if (!element.isConnected) return false;
+      const style = getComputedStyle(element);
+      if (style.display === 'none' || style.visibility === 'hidden') return false;
+      return element.getClientRects().length > 0;
+    }) ||
+    candidates.find((element) => element.isConnected) ||
+    null
+  );
 }
 
 export function showNotification(message: string, type: 'success' | 'error' = 'error') {

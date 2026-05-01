@@ -45,7 +45,14 @@ html[data-chatgpt-unified-wide='true'] #page-header + div > div > div {
   height: 100%;
 }
 
-html[data-chatgpt-unified-wide='true'] button[data-testid='model-switcher-dropdown-button'] > div {
+html[data-chatgpt-unified-wide='true'] button[data-testid='model-switcher-dropdown-button'] > div,
+html[data-chatgpt-unified-wide='true']
+  button[data-testid='model-switcher-dropdown-button']
+  .header-wordmark,
+html[data-chatgpt-unified-wide='true']
+  button[data-testid='model-switcher-dropdown-button']
+  .header-wordmark
+  + .text-token-text-tertiary {
   display: none;
 }
 
@@ -82,6 +89,12 @@ html[data-chatgpt-unified-wide='true']
 
 /* Header organization */
 html[data-chatgpt-unified-wide='true'] #page-header .flex.items-center.justify-center.gap-3 {
+  position: fixed !important;
+  top: 0 !important;
+  right: 5px !important;
+}
+
+html[data-chatgpt-unified-wide='true'] [data-testid='thread-header-right-actions-container'] {
   position: fixed !important;
   top: 0 !important;
   right: 5px !important;
@@ -181,5 +194,12 @@ button.cursor-pointer.absolute.z-30.rounded-full.border.w-8.h-8[class*='bottom-[
 
 /* Hide scroll-to-bottom button */
 button.cursor-pointer.absolute.z-30.rounded-full.w-8.h-8[class~='end-1/2'][class~='translate-x-1/2'][class~='print:hidden'] {
+  display: none !important;
+}
+
+html[data-chatgpt-unified-wide='true']
+  #thread-bottom-container
+  > .relative.mx-auto.h-0
+  button[aria-hidden='true'] {
   display: none !important;
 }
