@@ -43,6 +43,7 @@ const manifest: chrome.runtime.ManifestV3 = {
     {
       matches: ['https://chatgpt.com/*', 'https://chat.openai.com/*'],
       js: ['src/content/index.ts'],
+      css: ['src/content/styles.css'],
       run_at: 'document_end',
     },
   ],

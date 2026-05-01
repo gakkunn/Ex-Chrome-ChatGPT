@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import preact from '@preact/preset-vite';
-import { defineConfig, type Plugin } from 'vite';
+import { build as viteBuild, defineConfig, type Plugin } from 'vite';
 
 import manifest from './src/manifest/manifest.config';
 
@@ -29,6 +29,7 @@ function buildManifest() {
     content_scripts: manifest.content_scripts?.map((script) => ({
       ...script,
       js: ['content.js'],
+      css: ['content.css'],
     })),
     web_accessible_resources: manifest.web_accessible_resources?.map((resource) => ({
       ...resource,
@@ -37,14 +38,59 @@ function buildManifest() {
   };
 }
 
-function extensionManifestPlugin(): Plugin {
+async function buildContentScript(isProd: boolean) {
+  await viteBuild({
+    configFile: false,
+    publicDir: false,
+    resolve: {
+      alias: {
+        '@': r('src'),
+      },
+    },
+    esbuild: {
+      drop: isProd ? ['console', 'debugger'] : [],
+    },
+    build: {
+      emptyOutDir: false,
+      outDir: distDir,
+      lib: {
+        entry: r('src/content/index.ts'),
+        name: 'ChatGptUnifiedContent',
+        formats: ['iife'],
+        fileName: () => 'content.js',
+      },
+      minify: isProd ? 'esbuild' : false,
+      rollupOptions: {
+        output: {
+          inlineDynamicImports: true,
+        },
+      },
+    },
+  });
+}
+
+function extensionManifestPlugin(isProd: boolean): Plugin {
   return {
     name: 'extension-manifest',
     apply: 'build',
-    closeBundle() {
+    buildStart() {
+      [
+        'src/content/index.ts',
+        'src/content/features/shortcuts.ts',
+        'src/content/features/ui-tweaks.ts',
+        'src/content/features/utils.ts',
+        'src/content/styles.css',
+      ].forEach((file) => this.addWatchFile(r(file)));
+    },
+    async closeBundle() {
       mkdirSync(distDir, { recursive: true });
       cpSync(r('_locales'), resolve(distDir, '_locales'), { recursive: true });
-      writeFileSync(resolve(distDir, 'manifest.json'), `${JSON.stringify(buildManifest(), null, 2)}\n`);
+      cpSync(r('src/content/styles.css'), resolve(distDir, 'content.css'));
+      await buildContentScript(isProd);
+      writeFileSync(
+        resolve(distDir, 'manifest.json'),
+        `${JSON.stringify(buildManifest(), null, 2)}\n`
+      );
     },
   };
 }
@@ -53,7 +99,7 @@ export default defineConfig(({ mode }) => {
   const isProd = mode === 'production';
 
   return {
-    plugins: [preact(), extensionManifestPlugin()],
+    plugins: [preact(), extensionManifestPlugin(isProd)],
     resolve: {
       alias: {
         '@': r('src'),
@@ -66,7 +112,6 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         input: {
           background: r('src/background/index.ts'),
-          content: r('src/content/index.ts'),
           popup: r('src/popup/index.html'),
           inject: r('src/inject/index.ts'),
         },

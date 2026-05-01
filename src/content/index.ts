@@ -1,5 +1,3 @@
-import '@/content/styles.css';
-
 import {
   DEFAULT_FEATURE_TOGGLES,
   DEFAULT_SHORTCUTS,
@@ -156,7 +154,7 @@ if (isExtensionContextValid()) {
 
   // Inject Page Context Script (for history & network interception)
   const script = document.createElement('script');
-  script.src = chrome.runtime.getURL('src/inject/index.ts');
+  script.src = chrome.runtime.getURL('inject.js');
   script.addEventListener('load', () => {
     script.remove();
   });
