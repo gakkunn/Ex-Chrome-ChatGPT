@@ -48,3 +48,5 @@ vendor/
 .npm/
 .yarn/
 .pnp.*
+
+commit.sh
