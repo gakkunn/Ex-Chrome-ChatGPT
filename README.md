@@ -20,7 +20,7 @@ This is an open-source extension implemented based on Chrome Extension Manifest 
 - **Wide Screen + Focus toggle**: Cleaner, wider layout while preserving input field focus
 - **Safe send**: Prevents accidental Enter-only sends; requires Cmd/Ctrl+Enter to submit
 - **Keep scroll position on send**: Optionally prevent automatic jump-to-bottom after sending
-- **Model operation shortcuts**: Quickly open the model selector or switch directly to Auto/Instant/Thinking modes
+- **Model operation shortcuts**: Quickly open the model selector or switch directly to Instant/Thinking/Pro modes
 - **Pin/Unpin chat**: Toggle chat pin status from the keyboard
 - **Branch chat**: Create a new conversation branch from the last assistant message
 - **Extra utilities**: Launch Temporary Chat, view shortcut help overlay, and more
@@ -33,10 +33,10 @@ This is an open-source extension implemented based on Chrome Extension Manifest 
 
 Screenshots will be added later (see `docs/images/README.md`). Currently showing local captures as placeholders.
 
-| Screen                                          | 
-| ----------------------------------------------- | 
-| ![screenshot-1](./docs/images/local/screenshot-1.png) | 
-| ![screenshot-2](./docs/images/local/screenshot-2-1280x800.png) | 
+| Screen                                                         |
+| -------------------------------------------------------------- |
+| ![screenshot-1](./docs/images/local/screenshot-1.png)          |
+| ![screenshot-2](./docs/images/local/screenshot-2-1280x800.png) |
 
 ---
 
@@ -76,7 +76,7 @@ npm run build   # or npm run dev (watch build to dist/ for development)
 
 1. After installing the extension, pin the icon from the Chrome toolbar.
 2. Use the popup to toggle features on/off and click any shortcut input field to rebind it with conflict detection.
-3. Examples: `j`/`k` for scrolling, `Shift + Space` to toggle input focus, `Cmd/Ctrl + Enter` for safe send, `Cmd/Ctrl + Shift + 8/9/0` to switch to Auto/Thinking/Instant modes (Instant uses `Cmd/Ctrl + Shift + 7` on Windows), `Cmd/Ctrl + I` to open Temporary Chat, `Cmd/Ctrl + Shift + P` to pin/unpin the current chat, `Cmd/Ctrl + B` to branch the chat from the last assistant message.
+3. Examples: `j`/`k` for scrolling, `Shift + Space` to toggle input focus, `Cmd/Ctrl + Enter` for safe send, `Cmd/Ctrl + Shift + 7/8/9` to switch to Instant/Thinking/Pro modes, `Cmd/Ctrl + I` to open Temporary Chat, `Cmd/Ctrl + Shift + P` to pin/unpin the current chat, `Cmd/Ctrl + B` to branch the chat from the last assistant message.
 
 ---
 
@@ -121,7 +121,7 @@ Ex-Chrome-ChatGPT/
   LICENSE
 ```
 
-* Edit to match your actual structure.
+- Edit to match your actual structure.
 
 ---
 
@@ -142,6 +142,7 @@ Quick steps:
 ---
 
 ## Privacy Policy
+
 This extension does not collect personally identifiable information and does not send browsing data to external servers. Settings such as feature toggles and custom shortcuts are stored locally (Chrome storage). For details, please see our [Privacy Policy](./PRIVACY_POLICY.md).
 
 ---
