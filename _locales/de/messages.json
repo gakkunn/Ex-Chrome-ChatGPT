@@ -54,6 +54,7 @@
   "shortcut_label_mode_instant": { "message": "Auf Modus Instant wechseln" },
   "shortcut_label_mode_thinking": { "message": "Auf Modus Thinking wechseln" },
   "shortcut_label_mode_pro": { "message": "Auf Modus Pro wechseln" },
+  "shortcut_label_cycle_thinking_effort": { "message": "Denkaufwand wechseln" },
   "shortcut_label_temporary_chat": { "message": "Temporären Chat öffnen" },
   "shortcut_label_pin_chat": { "message": "Chat anpinnen/entpinnen" },
   "shortcut_label_branch_chat": { "message": "Chat verzweigen" },
@@ -65,6 +66,15 @@
     "message": "Modellauswahl wurde nicht gefunden."
   },
   "notification_mode_item_missing": { "message": "\"$1\"-Menüpunkt wurde nicht gefunden." },
+  "notification_thinking_effort_unavailable": {
+    "message": "Der Denkaufwand kann im aktuellen Modus nicht geändert werden."
+  },
+  "notification_thinking_effort_item_missing": {
+    "message": "Optionen für den Denkaufwand wurden nicht gefunden."
+  },
+  "notification_thinking_effort_single_option": {
+    "message": "Es ist nur eine Option für den Denkaufwand verfügbar."
+  },
   "notification_temporary_chat_missing": {
     "message": "Schaltfläche für temporären Chat wurde nicht gefunden."
   },

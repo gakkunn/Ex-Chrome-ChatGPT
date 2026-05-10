@@ -52,6 +52,7 @@
   "shortcut_label_mode_instant": { "message": "切换到 Instant 模式" },
   "shortcut_label_mode_thinking": { "message": "切换到 Thinking 模式" },
   "shortcut_label_mode_pro": { "message": "切换到 Pro 模式" },
+  "shortcut_label_cycle_thinking_effort": { "message": "循环切换思考强度" },
   "shortcut_label_temporary_chat": { "message": "打开临时对话" },
   "shortcut_label_pin_chat": { "message": "固定/取消固定聊天" },
   "shortcut_label_branch_chat": { "message": "分支聊天" },
@@ -63,6 +64,15 @@
     "message": "找不到模型选择器。"
   },
   "notification_mode_item_missing": { "message": "找不到“$1”菜单项。" },
+  "notification_thinking_effort_unavailable": {
+    "message": "当前模式无法更改思考强度。"
+  },
+  "notification_thinking_effort_item_missing": {
+    "message": "找不到思考强度选项。"
+  },
+  "notification_thinking_effort_single_option": {
+    "message": "只有一个可用的思考强度选项。"
+  },
   "notification_temporary_chat_missing": {
     "message": "找不到临时对话按钮。"
   },

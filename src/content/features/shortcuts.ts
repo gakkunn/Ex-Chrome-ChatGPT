@@ -441,6 +441,169 @@ export class ShortcutsManager {
     );
   }
 
+  private isCheckedMenuItem(item: HTMLElement): boolean {
+    return (
+      item.getAttribute('aria-checked') === 'true' ||
+      item.getAttribute('data-state') === 'checked' ||
+      !!item.querySelector('[data-state="checked"]')
+    );
+  }
+
+  private findCurrentModeItemInRoot(root: HTMLElement): HTMLElement | null {
+    const items = Array.from(
+      root.querySelectorAll<HTMLElement>('[role="menuitemradio"], [role="radio"]')
+    ).filter((item) => this.isUsableElement(item));
+
+    return items.find((item) => this.isCheckedMenuItem(item)) || null;
+  }
+
+  private findCurrentModeItem(): HTMLElement | null {
+    const roots = this.getOpenModelRoots();
+    for (let index = roots.length - 1; index >= 0; index -= 1) {
+      const item = this.findCurrentModeItemInRoot(roots[index]);
+      if (item) return item;
+    }
+    return null;
+  }
+
+  private findThinkingEffortAction(modelItem: HTMLElement): HTMLElement | null {
+    const row =
+      modelItem.closest<HTMLElement>('[data-model-picker-thinking-effort-row]') ||
+      modelItem.parentElement;
+    if (!row) return null;
+
+    return (
+      row.querySelector<HTMLElement>('[data-model-picker-thinking-effort-action]') ||
+      row.querySelector<HTMLElement>('button[aria-label="Effort"][aria-haspopup="menu"]') ||
+      null
+    );
+  }
+
+  private getThinkingEffortItems(root: HTMLElement): HTMLElement[] {
+    return Array.from(
+      root.querySelectorAll<HTMLElement>('[role="menuitemradio"], [role="radio"]')
+    ).filter(
+      (item) =>
+        this.isUsableElement(item) &&
+        !this.isModelSwitcherItem(item) &&
+        !item.hasAttribute('data-model-picker-thinking-effort-menu-item')
+    );
+  }
+
+  private findThinkingEffortMenuRoot(previousRoots: Set<HTMLElement>): HTMLElement | null {
+    const roots = this.getOpenMenuRoots();
+    for (let index = roots.length - 1; index >= 0; index -= 1) {
+      const root = roots[index];
+      if (previousRoots.has(root)) continue;
+      if (this.getThinkingEffortItems(root).length) return root;
+    }
+
+    const latestRoot = roots[roots.length - 1];
+    if (latestRoot && this.getThinkingEffortItems(latestRoot).length) {
+      return latestRoot;
+    }
+
+    return null;
+  }
+
+  private getNextThinkingEffortItem(items: HTMLElement[]): HTMLElement | null {
+    if (!items.length) return null;
+
+    const checkedIndex = items.findIndex((item) => this.isCheckedMenuItem(item));
+    if (checkedIndex < 0) return items[0];
+    return items[(checkedIndex + 1) % items.length];
+  }
+
+  private refocusInputSoon() {
+    setTimeout(() => {
+      const input = getInputField();
+      if (input) input.focus();
+    }, 200);
+  }
+
+  private notifyThinkingEffortFailure(message: string) {
+    showNotification(message);
+    void this.closeAllMenus().finally(() => this.refocusInputSoon());
+  }
+
+  private async openCurrentModelMenu(): Promise<boolean> {
+    if (this.isGptsPage()) {
+      await this.openGptsTriggerMenu();
+      await this.openModelSubMenu();
+      return true;
+    }
+
+    const trigger = this.findModelSelectorButton();
+    if (!trigger) {
+      showNotification(getMessage('notification_model_selector_missing'));
+      return false;
+    }
+
+    humanClick(trigger);
+    return true;
+  }
+
+  private async cycleThinkingEffort() {
+    if (this.switching) return;
+
+    this.switching = true;
+
+    try {
+      await this.closeAllMenus();
+
+      const opened = await this.openCurrentModelMenu();
+      if (!opened) return;
+
+      const currentModeItem = (await waitFor(() => this.findCurrentModeItem(), {
+        timeout: 2000,
+      }).catch(() => null)) as HTMLElement | null;
+      if (!currentModeItem) {
+        this.notifyThinkingEffortFailure(getMessage('notification_thinking_effort_item_missing'));
+        return;
+      }
+
+      const effortAction = this.findThinkingEffortAction(currentModeItem);
+      if (!effortAction || this.isDisabledElement(effortAction)) {
+        this.notifyThinkingEffortFailure(getMessage('notification_thinking_effort_unavailable'));
+        return;
+      }
+
+      const previousRoots = new Set(this.getOpenMenuRoots());
+      humanClick(effortAction, { scroll: false });
+
+      const effortRoot = (await waitFor(() => this.findThinkingEffortMenuRoot(previousRoots), {
+        timeout: 2000,
+      }).catch(() => null)) as HTMLElement | null;
+      if (!effortRoot) {
+        this.notifyThinkingEffortFailure(getMessage('notification_thinking_effort_item_missing'));
+        return;
+      }
+
+      const effortItems = this.getThinkingEffortItems(effortRoot);
+      if (!effortItems.length) {
+        this.notifyThinkingEffortFailure(getMessage('notification_thinking_effort_item_missing'));
+        return;
+      }
+      if (effortItems.length === 1) {
+        this.notifyThinkingEffortFailure(getMessage('notification_thinking_effort_single_option'));
+        return;
+      }
+
+      const nextItem = this.getNextThinkingEffortItem(effortItems);
+      if (!nextItem) {
+        this.notifyThinkingEffortFailure(getMessage('notification_thinking_effort_item_missing'));
+        return;
+      }
+
+      humanClick(nextItem, { scroll: false });
+      this.refocusInputSoon();
+    } catch (error: unknown) {
+      this.notifyError(error);
+    } finally {
+      this.switching = false;
+    }
+  }
+
   private async openGptsTriggerMenu(): Promise<void> {
     const trigger = await this.waitForElement('#page-header [aria-haspopup="menu"]');
 
@@ -1288,6 +1451,12 @@ export class ShortcutsManager {
     if (this.matchesShortcut('modePro', e)) {
       e.preventDefault();
       this.selectMode('Pro');
+      return;
+    }
+
+    if (this.matchesShortcut('cycleThinkingEffort', e)) {
+      e.preventDefault();
+      this.cycleThinkingEffort();
       return;
     }
 

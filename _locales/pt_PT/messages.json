@@ -54,6 +54,7 @@
   "shortcut_label_mode_instant": { "message": "Mudar para o modo Instant" },
   "shortcut_label_mode_thinking": { "message": "Mudar para o modo Thinking" },
   "shortcut_label_mode_pro": { "message": "Mudar para o modo Pro" },
+  "shortcut_label_cycle_thinking_effort": { "message": "Alternar esforço de raciocínio" },
   "shortcut_label_temporary_chat": { "message": "Abrir conversa temporária" },
   "shortcut_label_pin_chat": { "message": "Fixar/Desafixar chat" },
   "shortcut_label_branch_chat": { "message": "Ramificar chat" },
@@ -65,6 +66,15 @@
     "message": "Não foi encontrado o seletor de modelos."
   },
   "notification_mode_item_missing": { "message": "Não foi encontrado o item de menu \"$1\"." },
+  "notification_thinking_effort_unavailable": {
+    "message": "O esforço de raciocínio não pode ser alterado no modo atual."
+  },
+  "notification_thinking_effort_item_missing": {
+    "message": "Não foram encontradas opções de esforço de raciocínio."
+  },
+  "notification_thinking_effort_single_option": {
+    "message": "Só está disponível uma opção de esforço de raciocínio."
+  },
   "notification_temporary_chat_missing": {
     "message": "Não foi encontrado o botão de conversa temporária."
   },

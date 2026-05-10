@@ -37,6 +37,7 @@ const FALLBACK_MESSAGES = {
   shortcut_label_mode_instant: 'Set Mode: Instant',
   shortcut_label_mode_thinking: 'Set Mode: Thinking',
   shortcut_label_mode_pro: 'Set Mode: Pro',
+  shortcut_label_cycle_thinking_effort: 'Cycle Thinking Effort',
   shortcut_label_temporary_chat: 'Open Temporary Chat',
   shortcut_label_pin_chat: 'Pin/Unpin Chat',
   shortcut_label_branch_chat: 'Branch Chat',
@@ -46,6 +47,10 @@ const FALLBACK_MESSAGES = {
   shortcut_panel_settings_link_text: 'Click here',
   notification_model_selector_missing: 'Model selector not found',
   notification_mode_item_missing: '"$1" menu item not found',
+  notification_thinking_effort_unavailable:
+    'Thinking effort cannot be changed for the current mode',
+  notification_thinking_effort_item_missing: 'Thinking effort options not found',
+  notification_thinking_effort_single_option: 'Only one thinking effort option is available',
   notification_temporary_chat_missing: 'Temporary Chat button not found',
   notification_conversation_menu_missing: 'Conversation menu not found',
   notification_pin_menu_item_missing: 'Pin/Unpin menu item not found',

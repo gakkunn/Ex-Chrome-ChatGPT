@@ -488,7 +488,8 @@ export function App() {
             )}
             {visibleDefinitions.map((def) => {
               const bindings = getBindingsFor(def);
-              const showNewBadge = def.id === 'copyLastUserMessage';
+              const showNewBadge =
+                def.id === 'copyLastUserMessage' || def.id === 'cycleThinkingEffort';
               return (
                 <div class="shortcut-row" key={def.id}>
                   <div class="shortcut-label">

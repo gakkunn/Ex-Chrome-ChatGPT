@@ -147,6 +147,10 @@
     "message": "Set Mode: Pro",
     "description": "Shortcut label."
   },
+  "shortcut_label_cycle_thinking_effort": {
+    "message": "Cycle Thinking Effort",
+    "description": "Shortcut label."
+  },
   "shortcut_label_temporary_chat": {
     "message": "Open Temporary Chat",
     "description": "Shortcut label."
@@ -182,6 +186,18 @@
   "notification_mode_item_missing": {
     "message": "\"$1\" menu item not found",
     "description": "Toast shown when a specific model menu entry is missing."
+  },
+  "notification_thinking_effort_unavailable": {
+    "message": "Thinking effort cannot be changed for the current mode",
+    "description": "Toast shown when the current mode does not expose thinking effort options."
+  },
+  "notification_thinking_effort_item_missing": {
+    "message": "Thinking effort options not found",
+    "description": "Toast shown when thinking effort options cannot be found."
+  },
+  "notification_thinking_effort_single_option": {
+    "message": "Only one thinking effort option is available",
+    "description": "Toast shown when there is no other thinking effort option to select."
   },
   "notification_temporary_chat_missing": {
     "message": "Temporary Chat button not found",

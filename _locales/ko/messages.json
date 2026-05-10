@@ -52,6 +52,7 @@
   "shortcut_label_mode_instant": { "message": "Instant 모드로 설정" },
   "shortcut_label_mode_thinking": { "message": "Thinking 모드로 설정" },
   "shortcut_label_mode_pro": { "message": "Pro 모드로 설정" },
+  "shortcut_label_cycle_thinking_effort": { "message": "사고 강도 순환" },
   "shortcut_label_temporary_chat": { "message": "임시 대화 열기" },
   "shortcut_label_pin_chat": { "message": "채팅 고정/고정 해제" },
   "shortcut_label_branch_chat": { "message": "채팅 분기" },
@@ -63,6 +64,15 @@
     "message": "모델 선택기를 찾을 수 없습니다."
   },
   "notification_mode_item_missing": { "message": "\"$1\" 메뉴 항목을 찾을 수 없습니다." },
+  "notification_thinking_effort_unavailable": {
+    "message": "현재 모드에서는 사고 강도를 변경할 수 없습니다."
+  },
+  "notification_thinking_effort_item_missing": {
+    "message": "사고 강도 옵션을 찾을 수 없습니다."
+  },
+  "notification_thinking_effort_single_option": {
+    "message": "사용 가능한 사고 강도 옵션이 하나뿐입니다."
+  },
   "notification_temporary_chat_missing": {
     "message": "임시 대화 버튼을 찾을 수 없습니다."
   },

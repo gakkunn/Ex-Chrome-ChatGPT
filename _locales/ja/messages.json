@@ -52,6 +52,7 @@
   "shortcut_label_mode_instant": { "message": "モードを Instant に設定" },
   "shortcut_label_mode_thinking": { "message": "モードを Thinking に設定" },
   "shortcut_label_mode_pro": { "message": "モードを Pro に設定" },
+  "shortcut_label_cycle_thinking_effort": { "message": "思考量を順番に切り替え" },
   "shortcut_label_temporary_chat": { "message": "一時チャットを開く" },
   "shortcut_label_pin_chat": { "message": "チャットをピン留め/ピン留め解除" },
   "shortcut_label_branch_chat": { "message": "チャットを分岐" },
@@ -63,6 +64,15 @@
     "message": "モデルセレクターが見つかりませんでした。"
   },
   "notification_mode_item_missing": { "message": "「$1」のメニュー項目がありません。" },
+  "notification_thinking_effort_unavailable": {
+    "message": "現在のモードでは思考量を変更できません。"
+  },
+  "notification_thinking_effort_item_missing": {
+    "message": "思考量の選択肢が見つかりませんでした。"
+  },
+  "notification_thinking_effort_single_option": {
+    "message": "選択できる思考量が1つだけです。"
+  },
   "notification_temporary_chat_missing": {
     "message": "一時チャットのボタンが見つかりませんでした。"
   },

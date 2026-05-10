@@ -19,6 +19,7 @@ export type ShortcutId =
   | 'modeInstant'
   | 'modeThinking'
   | 'modePro'
+  | 'cycleThinkingEffort'
   | 'temporaryChat'
   | 'togglePinChat'
   | 'branchChat'
@@ -149,6 +150,12 @@ export const SHORTCUT_DEFINITIONS: ShortcutDefinition[] = [
     labelKey: 'shortcut_label_mode_pro',
     category: 'otherShortcuts',
     defaultBindings: [MODE_PRO_DEFAULT_BINDING],
+  },
+  {
+    id: 'cycleThinkingEffort',
+    labelKey: 'shortcut_label_cycle_thinking_effort',
+    category: 'otherShortcuts',
+    defaultBindings: [{ key: 'e', code: 'KeyE', mod: true }],
   },
   {
     id: 'temporaryChat',

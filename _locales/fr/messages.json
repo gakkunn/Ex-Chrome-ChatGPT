@@ -54,6 +54,7 @@
   "shortcut_label_mode_instant": { "message": "Passer en mode Instant" },
   "shortcut_label_mode_thinking": { "message": "Passer en mode Thinking" },
   "shortcut_label_mode_pro": { "message": "Passer en mode Pro" },
+  "shortcut_label_cycle_thinking_effort": { "message": "Changer l'effort de réflexion" },
   "shortcut_label_temporary_chat": { "message": "Ouvrir un chat temporaire" },
   "shortcut_label_pin_chat": { "message": "Épingler/Désépingler le chat" },
   "shortcut_label_branch_chat": { "message": "Dériver le chat" },
@@ -65,6 +66,15 @@
     "message": "Sélecteur de modèle introuvable."
   },
   "notification_mode_item_missing": { "message": "Élément de menu \"$1\" introuvable." },
+  "notification_thinking_effort_unavailable": {
+    "message": "L'effort de réflexion ne peut pas être modifié dans le mode actuel."
+  },
+  "notification_thinking_effort_item_missing": {
+    "message": "Options d'effort de réflexion introuvables."
+  },
+  "notification_thinking_effort_single_option": {
+    "message": "Une seule option d'effort de réflexion est disponible."
+  },
   "notification_temporary_chat_missing": {
     "message": "Bouton de chat temporaire introuvable."
   },
