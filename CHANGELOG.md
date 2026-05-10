@@ -1,8 +1,8 @@
 # Changelog
 
-## Unreleased
+## 1.5.0 - 2026-05-10
 ### Features
-- Add a shortcut to cycle the current Thinking/Pro effort (`Cmd/Ctrl + E`).
+- Add a shortcut to cycle the current Thinking/Pro effort level (`Cmd/Ctrl + E`).
 
 ## 1.4.0 - 2026-05-01
 ### Features
